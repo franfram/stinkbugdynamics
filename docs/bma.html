@@ -36,6 +36,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -358,12 +360,15 @@ div.tocify {
 <li>
   <a href="bma.html">BMA</a>
 </li>
-<li>
-  <a href="ua.html">UA</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/myname/stinkbug_dynamics">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -412,7 +417,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
 aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>stinkbug_dynamics/</code> <span
+<strong>Knit directory:</strong> <code>stinkbugdynamics/</code> <span
 class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
@@ -450,15 +455,15 @@ results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstree948a367cccb8ee9f0950fa135a7e60fc4f964f95targetblank948a367a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstree6fd873bd7a0975c799cf24929b588e225820f5d6targetblank6fd873ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/franfram/stinkbug_dynamics/tree/948a367cccb8ee9f0950fa135a7e60fc4f964f95" target="_blank">948a367</a>
+<a href="https://github.com/franfram/stinkbugdynamics/tree/6fd873bd7a0975c799cf24929b588e225820f5d6" target="_blank">6fd873b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstree948a367cccb8ee9f0950fa135a7e60fc4f964f95targetblank948a367a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstree6fd873bd7a0975c799cf24929b588e225820f5d6targetblank6fd873ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -468,7 +473,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/franfram/stinkbug_dynamics/tree/948a367cccb8ee9f0950fa135a7e60fc4f964f95" target="_blank">948a367</a>.
+<a href="https://github.com/franfram/stinkbugdynamics/tree/6fd873bd7a0975c799cf24929b588e225820f5d6" target="_blank">6fd873b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -483,24 +488,20 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    R/
+    Ignored:    R/.Rhistory
     Ignored:    _targets/meta/process
     Ignored:    _targets/meta/progress
     Ignored:    _targets/objects/
     Ignored:    _targets/user/
-    Ignored:    code/
-    Ignored:    data/
-    Ignored:    output/
+    Ignored:    data/ecmwf_data/
+    Ignored:    data/ua/
+    Ignored:    output/plots/
+    Ignored:    output/tables/
     Ignored:    plots/
     Ignored:    renv/library/
     Ignored:    renv/staging/
-    Ignored:    ridgeplot.png
-    Ignored:    tabla_wrangled_data_2021.png
-    Ignored:    test.png
-    Ignored:    test_table.png
 
 </code></pre>
 <p>
@@ -550,7 +551,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/franfram/stinkbug_dynamics/blob/948a367cccb8ee9f0950fa135a7e60fc4f964f95/analysis/bma.Rmd" target="_blank">948a367</a>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/6fd873bd7a0975c799cf24929b588e225820f5d6/analysis/bma.Rmd" target="_blank">6fd873b</a>
 </td>
 <td>
 franfram
@@ -559,7 +560,24 @@ franfram
 2022-09-29
 </td>
 <td>
-wflow_publish("analysis/bma.Rmd")
+testtt
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/ae8e379b5cbfbb4efb7816ff4215bacec7e49676/analysis/bma.Rmd" target="_blank">ae8e379</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+website test
 </td>
 </tr>
 <tr>
@@ -567,7 +585,24 @@ wflow_publish("analysis/bma.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/franfram/stinkbug_dynamics/8efbc47c3c146f49443a12cd8ce7c5c6adcadbda/docs/bma.html" target="_blank">8efbc47</a>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/ae8e379b5cbfbb4efb7816ff4215bacec7e49676/docs/bma.html" target="_blank">ae8e379</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+website test
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/50ccec45a740c60e95d0435506abe2eb3450f652/docs/bma.html" target="_blank">50ccec4</a>
 </td>
 <td>
 franfram
@@ -584,7 +619,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/franfram/stinkbug_dynamics/blob/72ea72de36ed9fbc7234664f7e36904b0e66c363/analysis/bma.Rmd" target="_blank">72ea72d</a>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/f1e6380f5edbff9c69b8e519cdc81b70fecd9c10/analysis/bma.Rmd" target="_blank">f1e6380</a>
 </td>
 <td>
 franfram
@@ -593,7 +628,7 @@ franfram
 2022-09-29
 </td>
 <td>
-add rmds
+update website
 </td>
 </tr>
 <tr>
@@ -601,7 +636,7 @@ add rmds
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/franfram/stinkbug_dynamics/72ea72de36ed9fbc7234664f7e36904b0e66c363/docs/bma.html" target="_blank">72ea72d</a>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/53af0758c743571ec5047ae86cc088e31a6b0343/docs/bma.html" target="_blank">53af075</a>
 </td>
 <td>
 franfram
@@ -610,15 +645,15 @@ franfram
 2022-09-29
 </td>
 <td>
-add rmds
+Build site.
 </td>
 </tr>
 <tr>
 <td>
-html
+Rmd
 </td>
 <td>
-<a href="https://rawcdn.githack.com/franfram/stinkbug_dynamics/c60c549561300a656112e385ab75ca9c47701853/docs/bma.html" target="_blank">c60c549</a>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/3baee423516fd694f01e2c0a2bdeeee27cce8f35/analysis/bma.Rmd" target="_blank">3baee42</a>
 </td>
 <td>
 franfram
@@ -627,7 +662,7 @@ franfram
 2022-09-29
 </td>
 <td>
-add stuff for website
+publish website
 </td>
 </tr>
 </tbody>
@@ -637,7 +672,7 @@ add stuff for website
 </div>
 </div>
 </div>
-<p>sdsd</p>
+<p>sdsdsd</p>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
