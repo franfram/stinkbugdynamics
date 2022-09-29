@@ -16,7 +16,11 @@ navbar:
   - text: Forecasts M3
     href: forecast-per-loc.html
   - text: Forecasts model comparison
-    href: forecast_model-comparison.Rmd
+    href: forecast_model-comparison.html
+  - text: Parameters
+    href: parameters.html
+  - text: Validation
+    href: validation.html
   right:
   - icon: fab fa-github
     text: Source code

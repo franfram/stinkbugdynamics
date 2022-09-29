@@ -1,0 +1,1071 @@
+---
+title: "chinches tesina forecast vs datos"
+author: "Fran"
+date: "29/1/2021"
+output: html_document
+---
+  
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# install.packages(c("rmarkdown", "prettydoc", "rmdformats"))
+# install.packages("knitr") 
+# install.packages("tidyverse")
+# install.packages("jagsUI")
+# install.packages("rstan")
+# install.packages("ggmcmc")
+# install.packages("ggdag")
+# install.packages("ggthemes")
+# install.packages("gganimate")
+# install.packages("loo")
+# install.packages("stringr")
+# install.packages("RColorBrewer")
+# install.packages("devtools")
+# library(devtools)
+# devtools::install_github("rmcelreath/rethinking",ref="Experimental")
+# install.packages(c("cowplot", "grid", "gridExtra", "ggrepel", "reshape2", "ggforce", "ggridges", "shiny", "viridis"))
+# devtools::install_github("thomasp85/patchwork")
+
+rm(list=ls())
+
+library(tidyverse)
+library(lubridate)
+library(jagsUI)
+library(ggmcmc)
+library(ggdag)
+library(ggthemes)
+library(gganimate)
+library(loo)
+library(RColorBrewer)
+library(rethinking)
+library(patchwork)
+library(ggridges)
+library(viridis)
+library(rstan)
+library(knitr)
+library(rmarkdown)
+library(prettydoc)
+library(kableExtra)
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+
+## Función para generar valores de una distrib truncada
+rtruncnorm <- function(N, mean = 0, sd = 1, a = 0, b = Inf) { 
+  if (a > b) stop('Error: Truncation range is empty');
+  U <- runif(N, pnorm(a, mean, sd), pnorm(b, mean, sd));
+  qnorm(U, mean, sd); }
+
+
+```
+
+# Datos
+```{r warning=FALSE, include=FALSE}
+### ChinChes
+CC <- read.csv2("Datos chinches AAPPCE 2016 CSV.csv", 
+                skip = 4, header = TRUE, dec = ".")  %>% 
+      as_tibble %>%
+      filter(!is.na(Temp)) %>%
+      mutate("Fecha" = as.Date(Fecha, format= "%d/%m/%Y")) 
+
+n.muestras <- nrow(CC[CC$Localidad == "America" & CC$Fecha == "2017-02-17",])
+
+
+### NOAA
+NOAAdata <- read_csv("datosNOAA.csv") %>% as_tibble()
+
+#glimpse(CC)
+
+```
+
+### Datos brindados por la AAPPCE:
+```{r warning=FALSE}
+str(CC)
+```
+
+### Datos obtenidos del NOAA:
+```{r warning=FALSE}
+str(NOAAdata)
+
+```
+
+
+## Procesado de datos  
+* Se sumaron las 180 muestras de cada muestreo semanal en cada una de las localidades  
+* Se agruparon las fenologías individuales en los siguientes grupos:  
+    * V7.9.10 - Fenologías vegetativas V7, V9 y V10 (No hay datos con V8)  
+    * R1.2 - Fenologías reproductivas R1 (comienzo de floración) y R2 (floración completa)\
+    * R3.4 - Fenologías reproductivas R3 (comienzo de formación de vainas) y R4 (formación completa de vainas)  
+    * R5 - Comienzo de formación de semilla  
+    * R6 - Formación completa de semilla  
+    * R7 - Comienzo de madurez  
+    * R8 - Madurez completa.  
+Estas agrupaciones de Fenología son acordes con los Umbrales Daño que nos pidieron, los cuales varían según la fenología en la que se encuentre el cultivo. ([más detalle sobre fenologías](https://crops.extension.iastate.edu/soybean/production_growthstages.html))  
+* La temperatura del AAPPCE fue medida en el sitio y a la hora en la que se inició el muestreo ("Temperatura")  
+* La temperatura del NOAA consiste en medias diarias, a partir de las cuales se calculó la media semanal ("NOAA.air.temp.weekly.avg")  
+
+```{r message=FALSE, warning=FALSE}
+### Datos Chinches
+
+## Datos por semana
+CCsemana <- CC %>%
+  group_by(Localidad, Fecha) %>%
+  summarise("Fenologia" = names(which.max(table((Fenologia)))),
+            "Temperatura" = mean(Temp), 
+            "Nv.Joven" = sum(Nezara.viri..Chica), 
+            "Nv.Adulto" = sum(Nezara.viri..Grande), 
+            "Pg.Joven" = sum(Piezod..Guil..Chica.), 
+            "Pg.Adulto" = sum(Piezod..Guil..Grande), 
+            "Em.Joven" = sum(Edessa.med..Chica.), 
+            "Em.Adulto" = sum(Edessa.med..Grande.), 
+            "Df.Joven" = sum(Dichelops.f..Chica), 
+            "Df.Adulto" = sum(Dichelops.f..Grande),
+            "Total.Muestras" = max(Muestra)) %>%
+  mutate("Total.Joven" = Nv.Joven + Pg.Joven + Em.Joven + Df.Joven,
+         "Total.Adulto" = Nv.Adulto + Pg.Adulto + Em.Adulto + Df.Adulto)  
+
+
+## Calculamos el Equivalente Nezara (solo para Adultos)
+### Factores para Equivalente Nezara
+factor.Nv <- 1
+factor.Pg <- 1.6
+factor.Em <- 0.6
+factor.Df <- 0.3
+
+### EqNv
+CCsemana <- CCsemana %>%
+  mutate("EqNv" = Nv.Adulto * factor.Nv + Pg.Adulto * factor.Pg +
+                  Em.Adulto * factor.Em + Df.Adulto * factor.Df) %>%
+  mutate("EqNv.redondeado" = round(EqNv))
+  
+
+## Agrupamos Fenologías
+CCsemana <- CCsemana %>%
+  mutate(Fenologia = ifelse(Fenologia %in%
+    c("R5.1","R5.2","R5.3","R5.4","R5.5","R5.6","R5.7", "R5.8", "R5.9"),
+      "R5", Fenologia)) %>% 
+  mutate(Fenologia = ifelse(Fenologia %in% c("R7.2"), "R7", Fenologia)) %>%
+  mutate(Fenologia = ifelse(Fenologia %in% c("V7", "V9", "V10"), "V7.9.10",
+    Fenologia)) %>%
+  mutate(Fenologia = ifelse(Fenologia %in% c("R1", "R2"), "R1.2",
+                            Fenologia)) %>%
+  mutate(Fenologia = ifelse(Fenologia %in% c("R3", "R4"), "R3.4",
+                            Fenologia)) %>%
+  mutate(Fenologia = ifelse(Fenologia %in% c("R5"), "R5", Fenologia)) %>%
+  mutate(Fenologia = ifelse(Fenologia %in% c("R6"), "R6", Fenologia)) %>%
+  mutate(Fenologia = ifelse(Fenologia %in% c("R7"), "R7", Fenologia)) %>%
+  mutate(Fenologia = ifelse(Fenologia %in% c("R8"), "R8", Fenologia)) 
+  
+
+## Categórica de Fenología, centrada en V7.9.10
+CCsemana <- CCsemana %>%
+    mutate("nFenologia" = recode(Fenologia, "V7.9.10" = 0, 
+                                            "R1.2" = 1,
+                                            "R3.4" = 2, 
+                                            "R5" = 3, 
+                                            "R6" = 4, 
+                                            "R7" = 5, 
+                                            "R8" = 6))
+
+CCsemana <- select(ungroup(CCsemana), "Localidad", "Fecha", "Total.Muestras",
+                   "Fenologia", "nFenologia", everything()) 
+
+## Asignamos números a las Localidades en una nueva variable.
+CCsemana <- CCsemana %>%
+    mutate("nLocalidad" = recode(Localidad, "America" = 1, 
+                                            "Diego de Alvear" = 2, 
+                                            "La Francia" = 3, 
+                                            "Leones" = 4,  
+                                            "Necochea" = 5, 
+                                            "Pehuajo" = 6, 
+                                            "San Vicente" = 7, 
+                                            "Zavalla" = 8)) %>%
+    select("Localidad", "nLocalidad", "Fecha", "Total.Muestras", "Fenologia",
+           "nFenologia", everything()) #ordenamos variables
+
+
+## Dummies de Fenología
+CCsemana <- CCsemana %>%
+  mutate("V7.9.10" = ifelse(Fenologia == "V7.9.10", 1, 0)) %>%
+  mutate("R1.2" = ifelse(Fenologia == "R1.2", 1, 0)) %>%
+  mutate("R3.4" = ifelse(Fenologia == "R3.4", 1, 0)) %>%
+  mutate("R5" = ifelse(Fenologia == "R5", 1, 0)) %>%
+  mutate("R6" = ifelse(Fenologia == "R6", 1, 0)) %>%
+  mutate("R7" = ifelse(Fenologia == "R7", 1, 0)) %>%
+  mutate("R8" = ifelse(Fenologia == "R8", 1, 0))
+  
+## Cantidad de semanas que se midieron en cada Localidad
+nsemana <- CCsemana %>%
+  group_by(Localidad) %>%
+  tally() %>%
+  rename("Cantidad de Semanas" = n) 
+
+Localidades <- as.character(nsemana$Localidad)
+
+## Categórica de Semana
+# Cantidad total de localidades
+nLocalidades <- length(nsemana$Localidad) 
+
+# Cantidad de semanas por Localidad
+semanasLoc <- rep(0, nLocalidades) 
+for (i in 1:nLocalidades){
+  semanasLoc[i] <- nrow(CCsemana[CCsemana$nLocalidad == i,])
+}
+
+# Categórica
+Semana <- c(1:semanasLoc[1]) 
+for (i in 2:nLocalidades){
+  Semana <- c(Semana, (1:semanasLoc[i]))
+}
+
+# Unimos Categórica al set de datos y ordenamos columnas
+CCsemana <- CCsemana %>%  
+  ungroup() %>%
+  mutate("Semana" = Semana) %>%
+  select("Localidad", "nLocalidad", "Fecha", "Total.Muestras", "Semana",
+         "Fenologia", "nFenologia", "V7.9.10", "R1.2", "R3.4", "R5", "R6",
+         "R7", "R8", everything())
+
+
+col.chinches <- colnames(all_of(CCsemana))
+
+
+### Datos NOAA
+
+NOAAdata <- bind_rows( # Esto es porque usamos la misma estación 2 veces
+  NOAAdata, mutate(NOAAdata[NOAAdata$NAME == "GENERAL PICO, AR", ], 
+    NAME = "GENERAL PICO, AR, 2")) %>%
+  mutate("Localidad" = recode(NAME, 
+                             "GENERAL PICO, AR" = "America", 
+                             "MINISTRO PISTARINI, AR" = "San Vicente",
+                             "MARCOS JUAREZ, AR" = "Leones",
+                             "MAR DEL PLATA AERO, AR" = "Necochea",
+                             "PILAR OBSERVATORIO, AR" = "La Francia",
+                             "JUNIN, AR" = "Diego de Alvear",
+                             "ROSARIO, AR" = "Zavalla",
+                             "GENERAL PICO, AR, 2" = "Pehuajo"
+                             ) 
+         ) %>% # Promedio de temperatura semanal
+  group_by(week = week(DATE)) %>%
+  mutate("NOAA.air.temp.weekly.avg" = mean(TAVG)) %>%
+  ungroup()
+
+
+
+
+### Unimos datos Chinches + NOAA
+CCsemana <- left_join(x = CCsemana,
+                      y = NOAAdata, 
+                      by = c("Localidad" = "Localidad", "Fecha" = "DATE")) 
+
+
+
+CCsemana <- CCsemana %>% 
+  select(col.chinches, NOAA.air.temp.weekly.avg)
+
+
+# 
+# 
+# plot.temp.AAPPCE <- ggplot(CCsemana, aes(x= Semana, y = Temperatura)) +
+#   geom_line(aes(colour = Localidad)) +
+#   labs(y = "Temperatura AAPPCE") +
+#   coord_cartesian(ylim = c(10, 40))
+# 
+# plot.temp.NOAA <- ggplot(CCsemana, aes(x= Semana, y = NOAA.air.temp.weekly.avg)) +
+#   geom_line(aes(colour = Localidad)) +
+#   labs(y = "Temperatura NOAA") +
+#   coord_cartesian(ylim = c(10, 40))
+# 
+# 
+# 
+# #glimpse(CCsemana)
+# #View(CCsemana)
+# 
+# 
+# 
+# ### Plot de datos
+# 
+# 
+# plotDatos.Total <- ggplot(CCsemana, aes(Semana, Total.Adulto)) +
+#                      geom_smooth(aes(colour = Localidad), se = FALSE) +
+#                      coord_cartesian(ylim = c(1, 300)) #+
+#                      #labs(title = "Total Adultos")
+# 
+# plotDatos.EqNv <- ggplot(CCsemana, aes(Semana, EqNv)) +
+#                      geom_smooth(aes(colour = Localidad), se = FALSE) +
+#                      coord_cartesian(ylim = c(1, 300)) +
+#                      labs(#title = "Equivalente Nezara"
+#                           y = "Equivalente Nezara")
+# 
+# plotDatos.EqNv.redondeado <- ggplot(CCsemana, aes(Semana, EqNv.redondeado)) +
+#                                geom_smooth(aes(colour = Localidad), se = FALSE)+
+#                                coord_cartesian(ylim = c(1, 300)) +
+#                                labs(#title = "Equivalente Nezara"
+#                                y = "Equivalente Nezara")
+# 
+# plotDatos.Nv <- ggplot(CCsemana, aes(Semana, Nv.Adulto)) +
+#                   geom_smooth(aes(colour = Localidad), se = FALSE) +
+#                   coord_cartesian(ylim = c(1, 250)) #+
+#                   #labs(title = "Nv Adultos")
+# 
+# plotDatos.Pg <- ggplot(CCsemana, aes(Semana, Pg.Adulto)) +
+#                   geom_smooth(aes(colour = Localidad), se = FALSE) +
+#                   coord_cartesian(ylim = c(1, 250)) #+
+#                   #labs(title = "Pg Adultos")
+# 
+# plotDatos.Em <- ggplot(CCsemana, aes(Semana, Em.Adulto)) +
+#                   geom_smooth(aes(colour = Localidad), se = FALSE) +
+#                   coord_cartesian(ylim = c(1, 100)) #+
+#                   #labs(title = "Em Adultos")
+# 
+# plotDatos.Df <- ggplot(CCsemana, aes(Semana, Df.Adulto)) +
+#                   geom_smooth(aes(colour = Localidad), se = FALSE) +
+#                   coord_cartesian(ylim = c(1, 100))
+
+
+```
+
+```{r warning=FALSE}
+kable(head(CCsemana))
+```
+
+### Exploración de datos (El eje Y de los plots difiere)
+```{r warning=FALSE}
+
+
+```
+
+
+
+
+
+# Modelo V1 (Binomial-Poisson) para cada especie por separado y EqNv como cantidad derivada y como dato. 
+## Data para modelo
+```{r message=FALSE, warning=FALSE}
+
+
+### Umbrales Daño INTA
+
+Umbrales.D <- tibble("Especie" = c("Piezodorus guildinii", "Nezara viridula", "Edessa meditabunda", "Dichelops furcatus"), #Umbrales Daño
+                     "Umbral R3.4" = c(0.9, 1.4, 2.1, 4.3),
+                     "Umbral R5" = c(1.3, 2.9, 4.2, 11.5),
+                     "Umbral R6" = c(4.3, 7.1, 10.0, 17.1)
+                      )   
+#view(Umbrales.D)
+
+
+
+```
+
+
+
+
+
+```{r warning=FALSE}
+#kable(as.data.frame(Modelo.A.JerarquicoV1D.AAPPCE$summary))
+
+
+```
+
+
+
+```{r warning=FALSE}
+# tabla para tesina
+# 
+# post_data_filtered <- as.data.frame(Modelo.A.JerarquicoV1D.NOAA$summary) %>% 
+#   rownames_to_column() %>% 
+#   rename("parameters" = "rowname") %>% 
+#   filter(str_detect(parameters, pattern = "EqNv.dat") &
+#          !str_detect(parameters, pattern = "X.A")) %>% 
+#   mutate(across(where(is.numeric), round, 3)) %>% 
+#   kable("latex") %>% 
+#   kable_styling("striped") %>% 
+#   save_kable("tabla_post_tesina.png")
+# 
+# post_data_filtered_save <- as.data.frame(Modelo.A.JerarquicoV1D.NOAA$summary) %>% 
+#   rownames_to_column() %>% 
+#   rename("parameters" = "rowname") %>% 
+#   filter(str_detect(parameters, pattern = "EqNv.dat") &
+#          !str_detect(parameters, pattern = "X.A")) %>% 
+#   mutate(across(where(is.numeric), round, 3)) 
+# 
+# write_csv(post_data_filtered_save, "testiccc.csv")
+# 
+# View(post_data_filtered)
+# library(gridExtra)
+
+```
+
+
+
+
+
+
+# Jags loop
+## Data 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+# hay que crear un set de datos como el que importamos pero que contenga una columna de EqNv 
+CC.sample <- CC %>%
+  mutate("EqNv..Grande" = Nezara.viri..Grande * factor.Nv  + 
+                          Piezod..Guil..Grande * factor.Pg +
+                          Edessa.med..Grande. * factor.Em  + 
+                          Dichelops.f..Grande * factor.Df ) %>%
+  select("Localidad", "Fecha", "Fenologia", "Muestra", "Nezara.viri..Grande",
+         "Piezod..Guil..Grande", "Edessa.med..Grande.", "Dichelops.f..Grande",
+         "EqNv..Grande")
+
+
+# Datos para el Modelo CONSTANTES en todas las réplicas y tamaños muestrales
+## Temperatura escalada (T.s)
+l <- list()
+for (i in 1:nLocalidades){
+  l[[i]] <- CCsemana[CCsemana$nLocalidad == i,]$NOAA.air.temp.weekly.avg
+}
+
+n <- max(sapply(l, length)) 
+ll <- lapply(l, function(X) {
+    c(as.character(X), rep("NA", times = n - length(X)))
+})
+
+T.NOAA <- do.call(cbind, ll) 
+T.NOAA <- apply(T.NOAA, 2, as.numeric)
+T.NOAA.s <- scale(T.NOAA)
+
+## Categórica de Fenología
+l <- list()
+for (i in 1:nLocalidades){
+  l[[i]] <- CCsemana[CCsemana$nLocalidad == i,]$nFenologia
+}
+
+n <- max(sapply(l, length)) 
+ll <- lapply(l, function(X) {
+    c(as.character(X), rep("NA", times = n - length(X)))
+})
+
+nFenologia <- do.call(cbind, ll) 
+nFenologia <- apply(nFenologia, 2, as.numeric)
+
+
+
+# Modelo
+cat(file = "CCA.JerarquicoV1D.EqNv.dat", 
+"  model {
+    
+    # EqNv (entra como dato)
+    ## Init
+    for (j in 1:nLocalidades){
+      X.A.EqNv.dat[1,j] ~ dpois(lambda.ini.EqNv.dat)
+    }
+
+    ## Data model  
+    for (j in 1:nLocalidades){
+      for (t in 1:semanasLoc[j]){
+        Y.A.EqNv.dat[t,j] ~ dbin(pobs.EqNv.dat, X.A.EqNv.dat[t,j]) 
+      }  
+    }    
+
+    ## Process model
+    for (j in 1:nLocalidades){
+      for (t in 2:semanasLoc[j]){
+        X.A.EqNv.dat[t,j] ~ dpois(lambda.A.EqNv.dat[t,j])
+        lambda.A.EqNv.dat[t,j] <- r.A.EqNv.dat[t-1,j] * X.A.EqNv.dat[t-1,j] +
+                                  I.EqNv.dat[j]  
+        log(r.A.EqNv.dat[t-1,j]) <- #b0.EqNv.dat[j] + 
+                                     bT.A.EqNv.dat[j] * T.s[t-1,j] + 
+                                     bF.EqNv.dat[j] * nFenologia[t-1,j]
+      }
+    }
+    
+    ## Log-Likelihood
+#      for (j in 1:nLocalidades){
+#       for (t in 1:semanasLoc[j]){
+#         loglik.EqNv.dat[t,j] <- logdensity.bin(Y.A.EqNv.dat[t,j], 
+#                                                 pobs.EqNv.dat,
+#                                                 X.A.EqNv.dat[t,j])  
+#       }
+#     }
+    
+
+    ## Priors
+    for (j in 1:nLocalidades){
+    #  b0.EqNv.dat[j]   ~ dnorm(mu0.EqNv.dat, sigmaF.EqNv.dat)
+      bF.EqNv.dat[j]   ~ dnorm(muF.EqNv.dat, sigmaF.EqNv.dat)
+      bT.A.EqNv.dat[j]   ~ dnorm(muT.EqNv.dat, sigmaT.EqNv.dat)
+      I.EqNv.dat[j]      ~ dnorm(muI.EqNv.dat, sigmaI.EqNv.dat)T(0, )   
+    }
+
+    #mu0.EqNv.dat ~ dnorm(0, 1/0.25)
+    muF.EqNv.dat ~ dnorm(0, 1/0.25)
+    muT.EqNv.dat ~ dnorm(0, 1/0.25)
+    muI.EqNv.dat ~ dnorm(0, 1)
+    
+    #sigma0.EqNv.dat ~ dexp(5)
+    sigmaF.EqNv.dat ~ dexp(5)
+    sigmaT.EqNv.dat ~ dexp(5)
+    sigmaI.EqNv.dat ~ dexp(1)
+
+    pobs.EqNv.dat ~ dbeta(8,2.5)
+    lambda.ini.EqNv.dat ~ dnorm(0, 1)T(0, )
+    
+}"
+)
+    
+
+pars.V1.EqNv.dat <- c("r.A.EqNv.dat",
+                      "pobs.EqNv.dat",
+                      #"loglik.EqNv.dat",
+                      "lambda.ini.EqNv.dat",
+                      "X.A.EqNv.dat",
+                      "I.EqNv.dat",
+                      "b0.EqNv.dat",
+                      "bF.EqNv.dat", 
+                      "bT.A.EqNv.dat",
+                      "mu0.EqNv.dat", 
+                      "muF.EqNv.dat", 
+                      "muT.EqNv.dat",  
+                      "muI.EqNv.dat",  
+                      #"sigma0.EqNv.dat", 
+                      "sigmaF.EqNv.dat", 
+                      "sigmaT.EqNv.dat", 
+                      "sigmaI.EqNv.dat"
+                      )
+
+
+# Vamos a usar distintos tamaños muestrales solo para la última localidad (Zavalla)
+
+# Tamaño muestral. Se invierte para ir de mayor a menor en el loop. 
+# sample.size <- rev(c(seq(from = 10, to = 80, by = 10), 
+#                      seq(from = 100, to = 180, by = 20)))
+
+sample.size <- c(180)
+
+# Cantidad de réplicas por Tamaño muestral
+repl <- c(1)
+
+
+# Otros
+lista.datos.forecast.EqNv.dat <- tibble()
+
+loc.suffix <- c(",1]", ",2]", ",3]", ",4]", ",5]", ",6]", ",7]", ",8]")
+
+Y.A.EqNv.dat <- list()
+
+datos.forecast.EqNv.dat <- list()
+
+loc_name <- list()
+```
+
+
+
+
+
+
+
+
+
+## Jags loop
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+sem_menos <- 2 # cantidad de semanas que le sacamos a la serie temporal de la localidad donde se evalua la prediccion vs los datos observados
+
+for (k in 1:2){  #"1:nLocalidades" 
+  for (s in 1){ #"1:length(sample.size)"
+    for (r in 1){   #"1:max(repl)"
+      # Creamos datos, donde todas las localidades usan las 180 muestras, excepto 
+      # la Localidad j que usa sample.size[s] muestras
+
+      ## Muestras de todas las localidades excepto Localidad k
+      l <- list()
+      locs_no_sampleadas <- setdiff(Localidades, Localidades[k])
+      for (i in 1:nLocalidades){
+        if(Localidades[i] %in% locs_no_sampleadas){
+          l[[i]] <- CCsemana[CCsemana$nLocalidad == i,]$EqNv.redondeado
+        } else {
+        l[[i]] <- rep(0, semanasLoc[k])  
+        }
+      }
+
+
+      ## Muestras Localidad k
+      l[[k]] <- CC.sample %>%
+      filter(Localidad == Localidades[k]) %>%
+      group_by(Fecha) %>%
+      sample_n(size = sample.size, replace = FALSE) %>%
+      summarise("EqNv_adulto_round" = round(sum(EqNv..Grande))) %>%
+      ### seleccionamos todas las semanas menos la última
+      slice(1:(pull(nsemana[nsemana$Localidad == Localidades[k],
+                            "Cantidad de Semanas"]) - sem_menos)) %>% #2 semanas menos de la serie temporal de la localidad k
+      pull(EqNv_adulto_round)
+    
+      ## Juntamos los datos de todas las localidades en un dataframe. 
+      n <- 12  # antes max(sapply(l, length)), lo cambiamos para evitar que 
+              # tenga 11 rows en vez de 12 en la localidad 2 
+       ll <- lapply(l, function(X) {
+          c(as.character(X), rep("NA", times = n - length(X)))
+      })
+
+      Y.A.Eq <- do.call(cbind, ll) 
+      Y.A.Eq <- apply(Y.A.Eq, 2, as.integer)
+      Y.A.EqNv.dat[[k]] <- Y.A.Eq
+    
+      # Model fitting
+      data.V1.EqNv.dat <- list(Y.A.EqNv.dat=as.matrix(Y.A.EqNv.dat[[k]]),      
+                            T.s=T.NOAA.s,
+                            nFenologia = nFenologia,
+                            nLocalidades = nLocalidades,
+                            semanasLoc = semanasLoc
+                            )
+    
+      inits.V1.EqNv.dat <- function() list(bT.A.EqNv.dat = rnorm(nLocalidades, 0, 1),
+                                        I.EqNv.dat = runif(nLocalidades, 0, 5),
+                                        pobs.EqNv.dat = runif(1),
+                                        X.A.EqNv.dat = as.matrix(Y.A.EqNv.dat[[k]][1:12,])  
+                                        )
+
+
+      Modelo.A.JerarquicoV1D.EqNv.dat <- autojags(
+        data = data.V1.EqNv.dat,
+        inits = inits.V1.EqNv.dat,
+        parameters.to.save= pars.V1.EqNv.dat,
+        model.file="CCA.JerarquicoV1D.EqNv.dat",
+        n.chains=3,
+        iter.increment=50000,
+        n.burnin=20000,
+        n.thin = 4,
+        max.iter = 300000, # antes max.iter = 300000
+        parallel = TRUE
+        )
+
+
+      samples.NOAA <- Modelo.A.JerarquicoV1D.EqNv.dat$samples
+      postdata.V1.NOAA <- bind_rows(as_tibble(samples.NOAA[[1]]),
+                                    as_tibble(samples.NOAA[[2]]),
+                                    as_tibble(samples.NOAA[[3]]))
+      # nos quedamos solo con la posterior de la localidad con sem-menos 
+      postdata.V1.EqNv.dat.NOAA <- bind_cols(
+        postdata.V1.NOAA %>% 
+          select(contains("EqNv.dat") & 
+                 ends_with(str_c(k, "]"))), # can't use loc.suffix due to comma
+      #also pobs isnt included in the select contains EqNv.dat etc, thus the bind.cols for quick fix
+        postdata.V1.NOAA %>% 
+          select(starts_with("pobs"))
+      )
+      
+
+
+      samplesplot <- 1e4
+
+
+      # sampleamos "samplesplot" rows de la posterior
+      postdata.V1.EqNv.dat.NOAA <- postdata.V1.EqNv.dat.NOAA[ 
+        sample(nrow(postdata.V1.EqNv.dat.NOAA), samplesplot),] 
+
+
+
+      ## Post de Fenología (categórica). 
+      post.bF.Loc.V1.EqNv.dat.NOAA <- data.frame(postdata.V1.EqNv.dat.NOAA %>%
+                                             select(starts_with("bF")))
+
+      ## Post de Temperaturas.
+      post.bT.Loc.V1.EqNv.dat.NOAA <- data.frame(postdata.V1.EqNv.dat.NOAA %>%
+                                             select(starts_with("bT")))
+
+      ## Post de Inmigración
+      post.I.Loc.V1.EqNv.dat.NOAA <- data.frame(postdata.V1.EqNv.dat.NOAA %>% 
+                                            select(starts_with("I")))
+
+      ## Post de pobs
+      post.pobs.V1.EqNv.dat.NOAA <- data.frame(postdata.V1.EqNv.dat.NOAA %>% 
+                                            select(starts_with("pobs")))
+
+      ## Post X.A
+      post.X.A.V1.EqNv.dat.NOAA <- list()
+      post.X.A.V1.EqNv.dat.NOAA[[k]] <- postdata.V1.EqNv.dat.NOAA %>%  
+        select(starts_with("X.A.EqNv.dat")) #%>%
+        #select(ends_with(loc.suffix[j])) # this lines gives an empty tibble
+
+      ### Creamos matrices para guardar datos forecast. Utilizamos la 
+      ### temperatura (NOAA)  y fenología correspondientes a la semana forecast
+      T.forecast.s <- T.NOAA.s 
+      nFenologia.C <- nFenologia   
+
+      # Forecast   
+      n.sims <- samplesplot #n de simulaciones. Misma cant que muestras de la post
+
+
+      ## Creamos arrays para guardar datos simulados (F1 es el escenario con Fen y
+      ## Temp conocidas) 
+      ### en realidad no deberian ser arrays porque pasaste de calcular todas las locs a calcular 
+      ### la loc k
+      X.A.F1.EqNv.dat <- array(NA, dim = c(n.sims, max(semanasLoc), nLocalidades))
+      Y.A.F1.EqNv.dat <- array(NA, dim = c(n.sims, max(semanasLoc), nLocalidades))
+      r.A.F1.EqNv.dat <- array(NA, dim = c(n.sims, max(semanasLoc), nLocalidades))
+      lambda.A.F1.EqNv.dat <- array(NA, dim = c(n.sims, max(semanasLoc), nLocalidades))
+
+      ## En vez de extraer r.A de la última semana como parámetro, lo calculamos a 
+      ## partir de la posterior para evitar problemas de convergencia 
+      for(t in (1:sem_menos - 1)){ # calculamos tantos r como semanas menos. El -1 es para que vaya desde la semana preforecast
+        r.A.F1.EqNv.dat[,(semanasLoc[k]- sem_menos + t), k] <- exp(
+          post.bT.Loc.V1.EqNv.dat.NOAA[, k] * T.forecast.s[(semanasLoc[k]- sem_menos + t), k] +
+          post.bF.Loc.V1.EqNv.dat.NOAA[, k] * nFenologia.C[(semanasLoc[k]- sem_menos + t), k])  
+      }  
+
+      ## Metemos la posterior de X.A en el array de X.A para el forecast y 
+      ## calculamos la posterior de Y.A
+      for (t in 1:(semanasLoc[k]- sem_menos)) {
+        X.A.F1.EqNv.dat[, t, k] <-  pull(post.X.A.V1.EqNv.dat.NOAA[[k]][, t])
+        Y.A.F1.EqNv.dat[, t, k] <- rbinom(n = n.sims, size = X.A.F1.EqNv.dat[, t, k], 
+                                        prob = pull(post.pobs.V1.EqNv.dat.NOAA))
+      }
+  
+
+      ## Forecast
+      for (t in c(semanasLoc[k] - sem_menos + 1, semanasLoc[k] - sem_menos + 2)){ #forecast para las siguientes 2 semanas
+        # Escenario F1 (Fen C)
+        lambda.A.F1.EqNv.dat[, t, k] <- r.A.F1.EqNv.dat[, t-1, k] * 
+                                        X.A.F1.EqNv.dat[, t-1, k] +
+                                        post.I.Loc.V1.EqNv.dat.NOAA[, k] 
+    
+        X.A.F1.EqNv.dat[, t, k] <- rpois(n.sims, lambda = lambda.A.F1.EqNv.dat[,t, k]) 
+        Y.A.F1.EqNv.dat[, t, k] <- rbinom(n = n.sims, size = X.A.F1.EqNv.dat[, t, k], 
+                                       prob = pull(post.pobs.V1.EqNv.dat.NOAA))
+      }
+    
+
+      ## Sacamos los NA y pasamos datos a una lista para graficar más fácilmente
+      l.X.A.F1.EqNv.dat <- list()
+      l.Y.A.F1.EqNv.dat <- list()
+      X.A.F1.EqNv.dat.planta <- list()
+      Y.A.F1.EqNv.dat.planta <- list()
+
+      not_all_na <- function(x) {any(!is.na(x))}
+      l.X.A.F1.EqNv.dat[[k]] <- X.A.F1.EqNv.dat[, , k] %>% as.data.frame %>%  
+        select_if(not_all_na)
+      l.Y.A.F1.EqNv.dat[[k]] <- Y.A.F1.EqNv.dat[, , k] %>% as.data.frame %>%  
+        select_if(not_all_na)
+
+      
+      X.A.F1.EqNv.dat <- l.X.A.F1.EqNv.dat[[k]]
+      Y.A.F1.EqNv.dat <- l.Y.A.F1.EqNv.dat[[k]]
+
+      # Datos por planta 
+      X.A.F1.EqNv.dat.planta[[k]] <- (X.A.F1.EqNv.dat) / sample.size
+      Y.A.F1.EqNv.dat.planta[[k]] <- ((Y.A.F1.EqNv.dat) / sample.size) %>%
+        rowid_to_column("post.sample")
+
+      ## Calculamos media, mediana y HPDIs
+      # X.A.F1.EqNv.dat.mean.planta <- list()
+      # X.A.F1.EqNv.dat.median.planta <- list()
+      # X.A.F1.EqNv.dat.HPDI60.planta <- list()
+      # X.A.F1.EqNv.dat.HPDI80.planta <- list()
+      # X.A.F1.EqNv.dat.HPDI95.planta <- list()
+      # 
+      # X.A.F1.EqNv.dat.mean.planta[[j]] <- apply(X.A.F1.EqNv.dat.planta[[j]], 2, mean,
+      #                                           na.rm = TRUE)
+      # X.A.F1.EqNv.dat.median.planta[[j]] <- apply(X.A.F1.EqNv.dat.planta[[j]], 2, median,
+      #                                           na.rm = TRUE)
+      # X.A.F1.EqNv.dat.HPDI60.planta[[j]] <- apply(X.A.F1.EqNv.dat.planta[[j]], 2, HPDI,  
+      #                                           prob = 0.60)
+      # X.A.F1.EqNv.dat.HPDI80.planta[[j]] <- apply(X.A.F1.EqNv.dat.planta[[j]], 2, HPDI,  
+      #                                           prob = 0.80)
+      # X.A.F1.EqNv.dat.HPDI95.planta[[j]] <- apply(X.A.F1.EqNv.dat.planta[[j]], 2, HPDI,  
+      #                                           prob = 0.95)
+
+
+      replica <- rep(repl[1], n.sims * semanasLoc[k]) 
+      cant.muestras <- rep(sample.size, n.sims * semanasLoc[k])
+      loc_name[[k]] <- rep(Localidades[[k]], length(cant.muestras))
+      
+      datos.forecast.EqNv.dat[[k]] <- bind_cols(
+          "cant.muestras" = cant.muestras, "replica" = replica, 
+          gather(X.A.F1.EqNv.dat.planta[[k]],Variable.X.A, post.X.A.F1.EqNv.dat.planta),
+          gather(Y.A.F1.EqNv.dat.planta[[k]], Variable.Y.A, post.Y.A.F1.EqNv.dat.planta,
+            c(2:(semanasLoc[k] + 1)))
+          ) %>%
+        mutate("semana" = recode(Variable.X.A, "V1" = 1,
+                                               "V2" = 2,
+                                               "V3" = 3,
+                                               "V4" = 4,
+                                               "V5" = 5,
+                                               "V6" = 6,
+                                               "V7" = 7,
+                                               "V8" = 8,
+                                               "V9" = 9,
+                                               "V10" = 10,
+                                               "V11" = 11,
+                                               "V12" = 12)) %>%
+        mutate("Localidad" = loc_name[[k]]) %>%
+        select("Localidad", 
+               "cant.muestras", 
+               "replica", 
+               "post.sample",
+               "semana",
+               "post.X.A.F1.EqNv.dat.planta",
+               "post.Y.A.F1.EqNv.dat.planta")
+    
+
+      lista.datos.forecast.EqNv.dat <- bind_rows(lista.datos.forecast.EqNv.dat,  
+                                           datos.forecast.EqNv.dat) 
+    }
+  }
+  
+  write_csv(lista.datos.forecast.EqNv.dat, str_c("lista.datos.forecast.EqNv.dat.", k))
+}
+
+```
+
+
+
+```{r}
+#lista.datos.forecast.EqNv.dat <- read_csv("lista.datos.forecast.EqNv.dat.SanVicente")
+
+```
+
+
+## Data for plots
+```{r}
+# datos plot
+
+Y.A.F1.EqNv.dat.mean.planta <- list()
+Y.A.F1.EqNv.dat.median.planta <- list()
+Y.A.F1.EqNv.dat.HPDI60.planta <- list()
+Y.A.F1.EqNv.dat.HPDI80.planta <- list()
+Y.A.F1.EqNv.dat.HPDI95.planta <- list()
+
+
+for (j in 1:nLocalidades){# 1:nLocalidades
+  Y.A.F1.EqNv.dat.mean.planta[[j]] <- 
+    apply(Y.A.F1.EqNv.dat.planta[[j]][, -1], 2, mean, na.rm = TRUE) 
+  # -1 para sacar la col post.sample
+  Y.A.F1.EqNv.dat.median.planta[[j]] <- 
+    apply(Y.A.F1.EqNv.dat.planta[[j]][, -1], 2, median, na.rm = TRUE)
+  
+  Y.A.F1.EqNv.dat.HPDI60.planta[[j]] <- 
+    apply(Y.A.F1.EqNv.dat.planta[[j]][, -1], 2, HPDI, prob = 0.60)
+  
+  Y.A.F1.EqNv.dat.HPDI80.planta[[j]] <- 
+    apply(Y.A.F1.EqNv.dat.planta[[j]][, -1], 2, HPDI, prob = 0.80)
+  
+  Y.A.F1.EqNv.dat.HPDI95.planta[[j]] <- 
+    apply(Y.A.F1.EqNv.dat.planta[[j]][, -1], 2, HPDI, prob = 0.95)
+  
+}
+    
+    
+# Merge data for ggplot loop
+data_plot_full <- list()
+
+# lista de vectores con las semanas (eje X de cada plot)  
+"puede que tenga que borrar las proximas 6 lineas"
+# semanasplotF <- list()
+# S <- 2 #cantidad de semanas de forecast
+# semanasLocF <- semanasLoc + S # vector de semanas de Forecast
+# for (j in 1:nLocalidades){
+#   semanasplotF[[j]] <- c(1:semanasLocF[j])
+# }
+
+
+data_plot_full <- list()
+
+for (j in seq_along(Localidades)){ # seq_along(Localidades)
+  data_plot_post <- 
+    bind_cols(
+      as.vector(Y.A.F1.EqNv.dat.HPDI95.planta[[j]]["|0.95", ]),
+      as.vector(Y.A.F1.EqNv.dat.HPDI95.planta[[j]]["0.95|", ]),
+    
+      as.vector(Y.A.F1.EqNv.dat.HPDI80.planta[[j]]["|0.8", ]),
+      as.vector(Y.A.F1.EqNv.dat.HPDI80.planta[[j]]["0.8|", ]),
+    
+      as.vector(Y.A.F1.EqNv.dat.HPDI60.planta[[j]]["|0.6", ]),
+      as.vector(Y.A.F1.EqNv.dat.HPDI60.planta[[j]]["0.6|", ]),
+    
+      as.vector(Y.A.F1.EqNv.dat.median.planta[[j]]),
+      
+      c(1:semanasLoc[[j]]), # antes semanasplotF[[j]],
+    
+      ) %>% 
+    rowid_to_column()
+  
+  names(data_plot_post) <- c("rowid", 
+                             "hpdi_min95", "hpdi_max95", 
+                             "hpdi_min80", "hpdi_max80", 
+                             "hpdi_min60", "hpdi_max60", 
+                             "post_median", "semanas_forecast")
+
+  
+  data_plot_obs <- 
+    bind_cols(
+      1:semanasLoc[[j]],
+      (pull(CCsemana[CCsemana$nLocalidad == j, "EqNv"] ) / n.muestras),
+      #pull(CCsemana[CCsemana$nLocalidad == j, "threshold_EqNv_m2"]),
+      pull(CCsemana[CCsemana$nLocalidad == j, "Fenologia"])
+    ) %>% 
+    rowid_to_column()
+  
+  names(data_plot_obs) <- c("rowid", "semanas_obs", "EqNv_obs", "phenology") # , "threshold"
+
+  data_plot_full[[j]] <- left_join(data_plot_post, data_plot_obs, by = "rowid")  
+  
+}
+
+
+
+
+# Esto no va a andar cuando haya mas locs, vas a tener que meter un subsetting que haga que en la localidad 9 arranque a usar los colores del comienzo de la lista. 
+hpdi_fill_data <- matrix(c("#e5f5e0", "#a1d99b", "#31a354", "#deebf7", "#9ecae1",
+                           "#3182bd", "#fff7bc", "#fec44f", "#db6d23", "#e7d4e8",
+                           "#c2a5cf", "#762a83", "#f6e8c3", "#dfc27d", "#bf812d",
+                           "#c7eae5", "#80cdc1", "#35978f", "#fde0dd", "#fcc5c0",
+                           "#e86f9f", "#fff7bc", "#ffdf70", "#fec44f"),
+                         ncol = nLocalidades)
+
+
+
+```
+
+
+
+## Plots
+```{r}
+
+# estimation ggplot loop
+plots_forecastvsdatos <- list()
+plots_forecastvsdatos_plotly <- list()
+plots_forecastvsdatos_names <- list()
+
+for (j in seq_along(Localidades)){ #seq_along(Localidades)
+  plots_forecastvsdatos[[j]] <- ggplot(data = data_plot_full[[j]][1:semanasLoc[j], ]) +
+
+    # Posterior Values
+    geom_ribbon(aes(x= semanas_obs,
+                    ymin = hpdi_min95,
+                    ymax = hpdi_max95),
+                fill = hpdi_fill_data[[1, j]]
+                ) +
+    geom_ribbon(aes(x= semanas_obs,
+                    ymin = hpdi_min80,
+                    ymax = hpdi_max80),
+                fill = hpdi_fill_data[[2, j]]
+                ) +
+    geom_ribbon(aes(x= semanas_obs,
+                    ymin = hpdi_min60,
+                    ymax = hpdi_max60),
+                fill = hpdi_fill_data[[3, j]]
+                ) +
+    geom_line(aes(x = semanas_obs,
+                  y = post_median),
+              lwd = 1,
+              color = "grey0") +
+
+    # Init Forecast
+    geom_vline(xintercept = semanasLoc[[j]] - sem_menos, 
+               linetype = "dashed") +
+    
+    
+    # Observed Values
+    geom_point(aes(x = semanas_obs,
+                  y = EqNv_obs),
+              lwd = 1,
+              color = "grey7"
+              ) +
+    # geom_line(aes(x = semanas_obs,
+    #               y = EqNv_obs),
+    #           lwd = 0.5,
+    #           color = "grey20"
+    #           ) +
+
+    # Etc
+    #coord_cartesian(ylim = c(0, max(data_plot_full[[j]]$threshold, na.rm = TRUE))) +
+    scale_x_continuous(breaks = seq(0, max(data_plot_full[[j]]$semanas_obs, na.rm=TRUE), 1)) + 
+    labs(x = "Semana",
+         y = expression(paste("EqNv / ", "m lineal")), #expression(paste("EqNv / ", m^2))
+         subtitle = Localidades[j],
+         caption =  paste0("Figura 1.", j)
+         ) +
+    theme_few(base_size = 8.5) +
+    theme(axis.title.y = element_text(angle = 90, vjust = 0.5))
+
+  plots_forecastvsdatos_names[[j]] <- paste0(Localidades[j], "_planta") 
+
+  print(plots_forecastvsdatos[[j]])
+}
+
+
+
+# Add Phenologies and Thresholds, then create ggplotlys
+
+# for (j in seq_along(Localidades)){
+#   for (i in seq_along(data_plot_full[[j]][1:semanasLoc[j], ]$semanas_forecast)){
+#     # Phenologies
+#     plots_estimation[[j]] <- plots_estimation[[j]] +
+#       annotate("text", 
+#                x = i, 
+#                y = max(data_plot_full[[j]][1:semanasLoc[j], ]$hpdi_max95), 
+#                label = data_plot_full[[j]]$phenology[i])
+#     
+#     # Thresholds
+#     plots_estimation[[j]] <- plots_estimation[[j]] +
+#       geom_segment(x = data_plot_full[[j]]$semanas_forecast[i] - 0.5,
+#                    xend = data_plot_full[[j]]$semanas_forecast[i] + 0.5,
+#                    y = data_plot_full[[j]]$threshold[i],
+#                    yend = data_plot_full[[j]]$threshold[i],
+#                    linetype = "dotted",
+#                    lwd = 1.05
+#       )
+    
+    
+    # Plotly
+    # plots_forecast_plotly[[j]] <- ggplotly(plots_forecast[[j]])
+
+#   }
+
+  # Print for .rmd render
+  # print(plots_forecastvsdatos[[j]])
+  # ggsave(filename = paste0("plot_forecastvsdatos_", Localidades[[j]], ".png"))
+#}
+
+
+
+
+# Add names to lists of plots 
+names(plots_forecastvsdatos) <- flatten_chr(plots_forecastvsdatos_names)
+#names(plots_forecast_plotly) <- paste0(flatten_chr(plots_names), "_plotly")
+
+"aclarar en el pie del gráfico que los umbrales que no aparecen están fuera del eje y del plot"
+
+```
+
+
+
+
+```{r}
+
+
+
+```
+
+
+
+
+
+```{r}
+
+
+```
+
+
+
+
+
+
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+
+
+
+
+```
+
+ 

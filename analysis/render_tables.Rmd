@@ -1,0 +1,81 @@
+---
+title: "table_rendering.Rmd"
+author: "franfram"
+date: '2022-06-13'
+output:
+  html_document:
+    df_print: paged
+---
+
+
+Setup
+```{r setup}
+library(here)
+knitr::opts_knit$set(root.dir = here::here())
+
+
+```
+
+
+Packages
+```{r}
+
+source('./packages.R')
+library(kableExtra)
+
+getwd()
+```
+
+
+
+```{r}
+
+tar_manifest(names = contains("table"))
+
+
+tar_manifest(names = contains("summary"))
+
+```
+
+
+
+```{r}
+
+# Stylize model tables and save them
+
+## Models
+c("M1_b0", "M2", "M3") %>% 
+  map(.f = ~ {
+    tar_read_raw(str_glue("table_summary_", .x)) %>% 
+    kable_styling() %>% 
+    save_kable(file = here('output', 'tables', str_glue(.x, '_model_summary.html')))
+    }
+  )
+
+```
+
+
+```{r}
+tar_read(table_loo_comparison_2017) 
+```
+
+```{r}
+tar_read(table_loo_comparison_2017) %>% 
+  save_kable(file = here('output', 'tables', 'loo_comparison.html'))
+
+```
+
+
+
+
+
+```{r}
+tar_read(table_waic_comparison_2017)
+```
+
+```{r}
+tar_read(table_waic_comparison_2017) %>% 
+  save_kable(file = here('output', 'tables', 'waic_comparison.html'))
+
+```
+

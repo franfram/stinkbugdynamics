@@ -1,0 +1,77 @@
+  model {
+    
+    # Init
+    for (j in 1:nLocalidades){
+      X.A.EqNv.dat[1,j] ~ dpois(lambda.ini.EqNv.dat)
+    }
+
+    # Data model  
+    for (j in 1:nLocalidades){
+      for (t in 1:semanasLoc[j]){
+        Y.A.EqNv.dat[t,j] ~ dbin(pobs.EqNv.dat, X.A.EqNv.dat[t,j]) 
+      }  
+    }    
+
+    # Process model
+    for (j in 1:nLocalidades){
+      for (t in 2:semanasLoc[j]){
+        X.A.EqNv.dat[t,j] ~ dpois(lambda.A.EqNv.dat[t,j])
+        lambda.A.EqNv.dat[t,j] <- r.A.EqNv.dat[t-1,j] * X.A.EqNv.dat[t-1,j] + I.EqNv.dat[t, j]  
+        log(r.A.EqNv.dat[t-1,j]) <- bT.A.EqNv.dat[j] * T.s.ECMWF[t-1,j] + 
+          bTP.A.EqNv.dat[j] * TP.s.ECMWF[t-1,j] +
+          bDP.A.EqNv.dat[j] * DP.s.ECMWF[t-1,j] +                
+          bF.VR1.2.3.EqNv.dat[j] * VR1.2.3[t-1,j] + 
+          bF.R4.5.6.7.EqNv.dat[j] * R4.5.6.7[t-1, j] + 
+          bF.R8.EqNv.dat[j] * R8[t-1, j]
+
+        I.EqNv.dat[t, j] <- I.ini[j] * (1 - I.decay[j])^(t)
+
+      }
+    }
+    
+    # Log-Likelihood
+      for (j in 1:nLocalidades){
+       for (t in 1:semanasLoc[j]){
+         loglik.EqNv.dat[t,j] <- logdensity.bin(Y.A.EqNv.dat[t,j], pobs.EqNv.dat, X.A.EqNv.dat[t,j])  
+       }
+     }
+    
+
+    # Priors
+    for (j in 1:nLocalidades){
+      I.ini[j]  ~ dnorm(muI.ini.EqNv.dat, sigmaI.ini.EqNv.dat)T(0, )
+      I.decay[j]  ~ dbeta(3.5, 10)
+
+      bT.A.EqNv.dat[j]   ~ dnorm(muT.EqNv.dat, sigmaT.EqNv.dat)
+      bTP.A.EqNv.dat[j]   ~ dnorm(muTP.EqNv.dat, sigmaTP.EqNv.dat)
+      bDP.A.EqNv.dat[j]   ~ dnorm(muDP.EqNv.dat, sigmaDP.EqNv.dat)
+      bF.VR1.2.3.EqNv.dat[j]   ~ dnorm(muF.VR1.2.3.EqNv.dat, sigmaF.VR1.2.3.EqNv.dat)
+      bF.R4.5.6.7.EqNv.dat[j]   ~ dnorm(muF.R4.5.6.7.EqNv.dat, sigmaF.R4.5.6.7.EqNv.dat)
+      bF.R8.EqNv.dat[j]   ~ dnorm(muF.R8.EqNv.dat, sigmaF.R8.EqNv.dat)
+    }
+
+    
+    muI.ini.EqNv.dat ~ dnorm(5, 5)T(0, )
+    muI.decay.EqNv.dat ~ dnorm(0, 0.3)T(0, 1)
+
+    muT.EqNv.dat ~ dnorm(0, 1/0.25)
+    muTP.EqNv.dat ~ dnorm(0, 1/0.25)
+    muDP.EqNv.dat ~ dnorm(0, 1/0.25)
+    muF.VR1.2.3.EqNv.dat  ~ dnorm(0, 1/0.25)
+    muF.R4.5.6.7.EqNv.dat ~ dnorm(0.5, 1/0.25)
+    muF.R8.EqNv.dat ~ dnorm(-0.5, 1/0.25)
+
+
+    sigmaI.ini.EqNv.dat ~ dnorm(5, 2)T(0, )
+    sigmaI.decay.EqNv.dat ~ dexp(2)
+
+    sigmaT.EqNv.dat ~ dexp(5)
+    sigmaTP.EqNv.dat ~ dexp(5)
+    sigmaDP.EqNv.dat ~ dexp(5)
+    sigmaF.VR1.2.3.EqNv.dat ~ dexp(5)
+    sigmaF.R4.5.6.7.EqNv.dat ~ dexp(5)
+    sigmaF.R8.EqNv.dat ~ dexp(5)
+
+    pobs.EqNv.dat ~ dbeta(8,2.5)
+    lambda.ini.EqNv.dat ~ dnorm(5, 3)T(0, )
+}

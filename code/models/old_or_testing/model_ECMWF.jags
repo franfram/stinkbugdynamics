@@ -1,0 +1,60 @@
+  model {
+    
+    # EqNv (entra como dato)
+    ## Init
+    for (j in 1:nLocalidades){
+      X.A.EqNv.dat[1,j] ~ dpois(lambda.ini.EqNv.dat)
+    }
+
+    ## Data model  
+    for (j in 1:nLocalidades){
+      for (t in 1:semanasLoc[j]){
+        Y.A.EqNv.dat[t,j] ~ dbin(pobs.EqNv.dat, X.A.EqNv.dat[t,j]) 
+      }  
+    }    
+
+    ## Process model
+    for (j in 1:nLocalidades){
+      for (t in 2:semanasLoc[j]){
+        X.A.EqNv.dat[t,j] ~ dpois(lambda.A.EqNv.dat[t,j])
+        lambda.A.EqNv.dat[t,j] <- r.A.EqNv.dat[t-1,j] * X.A.EqNv.dat[t-1,j] +
+                                  I.EqNv.dat[j]  
+        log(r.A.EqNv.dat[t-1,j]) <- #b0.EqNv.dat[j] + 
+                                     bT.A.EqNv.dat[j] * T.s.ECMWF[t-1,j] + 
+                                     bF.EqNv.dat[j] * nFenologia[t-1,j]
+      }
+    }
+    
+    ## Log-Likelihood
+     for (j in 1:nLocalidades){
+      for (t in 1:semanasLoc[j]){
+        loglik.EqNv.dat[t,j] <- logdensity.bin(Y.A.EqNv.dat[t,j],
+                                                pobs.EqNv.dat,
+                                                X.A.EqNv.dat[t,j])
+      }
+    }
+    
+
+    ## Priors
+    for (j in 1:nLocalidades){
+    #  b0.EqNv.dat[j]   ~ dnorm(mu0.EqNv.dat, sigmaF.EqNv.dat)
+      bF.EqNv.dat[j]   ~ dnorm(muF.EqNv.dat, sigmaF.EqNv.dat)
+      bT.A.EqNv.dat[j]   ~ dnorm(muT.EqNv.dat, sigmaT.EqNv.dat)
+      I.EqNv.dat[j]      ~ dnorm(muI.EqNv.dat, sigmaI.EqNv.dat)T(0, )   
+    }
+
+    #mu0.EqNv.dat ~ dnorm(0, 1/0.25)
+    muF.EqNv.dat ~ dnorm(0, 1/0.25)
+    muT.EqNv.dat ~ dnorm(0, 1/0.25)
+    muI.EqNv.dat ~ dnorm(0, 1)
+    
+    #sigma0.EqNv.dat ~ dexp(5)
+    sigmaF.EqNv.dat ~ dexp(5)
+    sigmaT.EqNv.dat ~ dexp(5)
+    sigmaI.EqNv.dat ~ dexp(1)
+
+    pobs.EqNv.dat ~ dbeta(8,2.5)
+    lambda.ini.EqNv.dat ~ dnorm(0, 1)T(0, )
+    
+
+}
