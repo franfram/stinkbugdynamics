@@ -1,5 +1,2 @@
-# stinkbugdynamics
-
-A [workflowr][] project.
-
-[workflowr]: https://github.com/workflowr/workflowr
+# stinkbug_targets_nn
+SSMs for stinkbug population dynamics

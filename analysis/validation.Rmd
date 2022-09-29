@@ -4,10 +4,8 @@ output: html_document
 date: "2022-09-28"
 ---
 
-```{r setup, include=FALSE}
+```{r setup}
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
-
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
 
@@ -20,11 +18,72 @@ source('./packages.R')
 # Posterior Predictive Checks
 ```{r}
 
-tar_manifest(contains("posterior"))
+tar_manifest(contains("post"))
 
-
-tar_read(plots_posterior_params_M3)
+tar_read(post_check_M3_2017)
 ```
+
+
+
+
+
+# América
+
+```{r}
+
+tar_read(post_check_M3_2017)[[1]] %>% ggplotly
+```
+
+# Diego de Alvear
+
+```{r}
+
+tar_read(post_check_M3_2017)[[2]] %>% ggplotly
+```
+
+# La Francia
+
+```{r}
+
+tar_read(post_check_M3_2017)[[3]] %>% ggplotly
+```
+
+# Leones
+
+```{r}
+
+tar_read(post_check_M3_2017)[[4]] %>% ggplotly
+```
+
+# Necochea
+
+```{r}
+
+tar_read(post_check_M3_2017)[[5]] %>% ggplotly
+```
+
+# Pehuajo
+
+```{r}
+
+tar_read(post_check_M3_2017)[[6]] %>% ggplotly
+```
+
+# San Vicente
+
+```{r}
+
+tar_read(post_check_M3_2017)[[7]] %>% ggplotly
+```
+
+# Zavalla
+
+```{r}
+
+tar_read(post_check_M3_2017)[[8]] %>% ggplotly
+```
+
+
 
 
 

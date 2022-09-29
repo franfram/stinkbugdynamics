@@ -10,8 +10,9 @@
 
 
 
+<meta name="date" content="2022-09-28" />
 
-<title>logbook</title>
+<title>bma</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -35,6 +36,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -323,7 +326,7 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">stinkbug_targets</a>
+      <a class="navbar-brand" href="index.html">Stink bug dynamics</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -336,9 +339,36 @@ div.tocify {
 <li>
   <a href="license.html">License</a>
 </li>
+<li>
+  <a href="data.html">Data</a>
+</li>
+<li>
+  <a href="pipeline.html">Pipeline</a>
+</li>
+<li>
+  <a href="forecast-per-loc.html">Forecasts M3</a>
+</li>
+<li>
+  <a href="forecast_model-comparison.Rmd">Forecasts model comparison</a>
+</li>
+<li>
+  <a href="validation.html">Validation</a>
+</li>
+<li>
+  <a href="parameters.html">Parameters</a>
+</li>
+<li>
+  <a href="bma.html">BMA</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/myname/stinkbug_dynamics">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -348,7 +378,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">logbook</h1>
+<h1 class="title toc-ignore">bma</h1>
+<h4 class="date">2022-09-28</h4>
 
 </div>
 
@@ -356,7 +387,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -367,8 +398,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -377,17 +408,17 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-28
+<strong>Last updated:</strong> 2022-09-29
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>stinkbug_targets_html/</code>
-<span class="glyphicon glyphicon-question-sign" aria-hidden="true"
+<strong>Knit directory:</strong> <code>stinkbugdynamics/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
 </p>
@@ -406,18 +437,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -441,16 +475,16 @@ empty environment.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20211230code">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220929code">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Seed:</strong>
-<code>set.seed(20211230)</code> </a>
+<code>set.seed(20220929)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20211230code"
+<div id="strongSeedstrongcodesetseed20220929code"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20211230)</code> was run prior to running
+<p>The command <code>set.seed(20220929)</code> was run prior to running
 the code in the R Markdown file. Setting a seed ensures that any results
 that rely on randomness, e.g. subsampling or permutations, are
 reproducible.</p>
@@ -508,15 +542,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugtargetstree6127cce6e3e40bbc70d1706f643512147a195640targetblank6127ccea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreeb3906bb9223c7294a369350dbf399f349afb475btargetblankb3906bba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/franfram/stinkbug_targets/tree/6127cce6e3e40bbc70d1706f643512147a195640" target="_blank">6127cce</a>
+<a href="https://github.com/franfram/stinkbugdynamics/tree/b3906bb9223c7294a369350dbf399f349afb475b" target="_blank">b3906bb</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugtargetstree6127cce6e3e40bbc70d1706f643512147a195640targetblank6127ccea"
+id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreeb3906bb9223c7294a369350dbf399f349afb475btargetblankb3906bba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -526,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/franfram/stinkbug_targets/tree/6127cce6e3e40bbc70d1706f643512147a195640" target="_blank">6127cce</a>.
+<a href="https://github.com/franfram/stinkbugdynamics/tree/b3906bb9223c7294a369350dbf399f349afb475b" target="_blank">b3906bb</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -541,7 +575,6 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    R/.Rhistory
@@ -549,27 +582,30 @@ Ignored files:
     Ignored:    _targets/meta/progress
     Ignored:    _targets/objects/
     Ignored:    _targets/user/
-    Ignored:    data/
-    Ignored:    output/
+    Ignored:    data/ecmwf_data/
+    Ignored:    data/ua/
+    Ignored:    output/plots/
+    Ignored:    output/tables/
     Ignored:    plots/
     Ignored:    renv/library/
     Ignored:    renv/staging/
-    Ignored:    ridgeplot.png
-    Ignored:    tabla_wrangled_data_2021.png
-    Ignored:    test.png
-    Ignored:    test_table.png
 
 Untracked files:
-    Untracked:  analysis/forecast-per-loc.Rmd
-    Untracked:  stinkbug_targets_html.Rproj
+    Untracked:  analysis/bma2.Rmd
+    Untracked:  bugs/
 
 Unstaged changes:
-    Deleted:    analysis/analysis.Rmd
-    Deleted:    analysis/bayesian-stacking.Rmd
-    Deleted:    analysis/plors.Rmd
-    Deleted:    analysis/presupuesto-ssm.rmd
-    Deleted:    analysis/test.rmd
-    Deleted:    stinkbug_targets_nn.Rproj
+    Modified:   README.md
+    Modified:   _targets.R
+    Modified:   _targets/meta/meta
+    Modified:   analysis/_site.yml
+    Modified:   analysis/bma.Rmd
+    Modified:   analysis/data.Rmd
+    Modified:   analysis/forecast-per-loc.Rmd
+    Modified:   analysis/forecast_model-comparison.Rmd
+    Modified:   analysis/parameters.Rmd
+    Modified:   analysis/pipeline.Rmd
+    Modified:   analysis/validation.Rmd
 
 </code></pre>
 <p>
@@ -584,57 +620,10 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/logbook.Rmd</code>) and HTML
-(<code>docs/logbook.html</code>) files. If you’ve configured a remote
-Git repository (see <code>?wflow_git_remote</code>), click on the
-hyperlinks in the table below to view the files as they were in that
-past version.
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/franfram/stinkbug_targets/blob/6127cce6e3e40bbc70d1706f643512147a195640/analysis/logbook.Rmd" target="_blank">6127cce</a>
-</td>
-<td>
-franfram
-</td>
-<td>
-2022-09-22
-</td>
-<td>
-init repo
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
@@ -661,7 +650,7 @@ chunk like this:</p>
 <div id="including-plots" class="section level2">
 <h2>Including Plots</h2>
 <p>You can also embed plots, for example:</p>
-<p><img src="figure/logbook.Rmd/pressure-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/bma2.Rmd/pressure-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the
 code chunk to prevent printing of the R code that generated the
 plot.</p>

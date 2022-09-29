@@ -327,7 +327,7 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Stink bug dynamics</a>
+      <a class="navbar-brand" href="index.html">stinkbug_targets</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -339,18 +339,6 @@ div.tocify {
 </li>
 <li>
   <a href="license.html">License</a>
-</li>
-<li>
-  <a href="data.html">Data</a>
-</li>
-<li>
-  <a href="pipeline.html">Pipeline</a>
-</li>
-<li>
-  <a href="forecast-per-loc.html">Forecasts M3</a>
-</li>
-<li>
-  <a href="forecast_model-comparison.Rmd">Forecasts model comparison</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -374,7 +362,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -385,8 +373,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -395,17 +383,17 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-29
+<strong>Last updated:</strong> 2022-09-28
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>stinkbugdynamics/</code> <span
-class="glyphicon glyphicon-question-sign" aria-hidden="true"
+<strong>Knit directory:</strong> <code>stinkbug_targets_html/</code>
+<span class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
 </p>
@@ -424,21 +412,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -462,16 +447,16 @@ empty environment.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220929code">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20211230code">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Seed:</strong>
-<code>set.seed(20220929)</code> </a>
+<code>set.seed(20211230)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20220929code"
+<div id="strongSeedstrongcodesetseed20211230code"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220929)</code> was run prior to running
+<p>The command <code>set.seed(20211230)</code> was run prior to running
 the code in the R Markdown file. Setting a seed ensures that any results
 that rely on randomness, e.g. subsampling or permutations, are
 reproducible.</p>
@@ -529,13 +514,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong49bed99">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugtargetstree6127cce6e3e40bbc70d1706f643512147a195640targetblank6127ccea">
 <span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong> 49bed99
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/franfram/stinkbug_targets/tree/6127cce6e3e40bbc70d1706f643512147a195640" target="_blank">6127cce</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrong49bed99"
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugtargetstree6127cce6e3e40bbc70d1706f643512147a195640targetblank6127ccea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -544,7 +531,8 @@ and connecting the code version to the results is critical for
 reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version 49bed99.
+The results in this page were generated with repository version
+<a href="https://github.com/franfram/stinkbug_targets/tree/6127cce6e3e40bbc70d1706f643512147a195640" target="_blank">6127cce</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -559,46 +547,35 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    data/ecmwf_data/
-    Ignored:    data/ua/
-    Ignored:    output/plots/
-    Ignored:    output/tables/
+    Ignored:    R/.Rhistory
+    Ignored:    _targets/meta/process
+    Ignored:    _targets/meta/progress
+    Ignored:    _targets/objects/
+    Ignored:    _targets/user/
+    Ignored:    data/
+    Ignored:    output/
     Ignored:    plots/
+    Ignored:    renv/library/
+    Ignored:    renv/staging/
+    Ignored:    ridgeplot.png
+    Ignored:    tabla_wrangled_data_2021.png
+    Ignored:    test.png
+    Ignored:    test_table.png
 
 Untracked files:
-    Untracked:  R/
-    Untracked:  _targets.R
-    Untracked:  _targets/
-    Untracked:  analysis/bma.Rmd
-    Untracked:  analysis/data.Rmd
     Untracked:  analysis/forecast-per-loc.Rmd
-    Untracked:  analysis/forecast_model-comparison.Rmd
-    Untracked:  analysis/logbook.Rmd
-    Untracked:  analysis/parameters.Rmd
-    Untracked:  analysis/pipeline.Rmd
-    Untracked:  analysis/references.bib
-    Untracked:  analysis/render_tables.Rmd
-    Untracked:  analysis/validation.Rmd
-    Untracked:  code/models/
-    Untracked:  code/tesina_forecastvsdatos_singleloc.rmd
-    Untracked:  code/tesina_forecastvsdatos_todasloc.rmd
-    Untracked:  code/test.R
-    Untracked:  packages.R
-    Untracked:  renv.lock
-    Untracked:  renv/
+    Untracked:  stinkbug_targets_html.Rproj
 
 Unstaged changes:
-    Modified:   .Rprofile
-    Modified:   .gitignore
-    Modified:   analysis/_site.yml
-    Modified:   analysis/about.Rmd
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/license.Rmd
-    Modified:   code/README.md
-    Modified:   data/README.md
-    Modified:   output/README.md
+    Deleted:    analysis/analysis.Rmd
+    Deleted:    analysis/bayesian-stacking.Rmd
+    Deleted:    analysis/plors.Rmd
+    Deleted:    analysis/presupuesto-ssm.rmd
+    Deleted:    analysis/test.rmd
+    Deleted:    stinkbug_targets_nn.Rproj
 
 </code></pre>
 <p>
@@ -613,17 +590,64 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/render_tables.Rmd</code>) and
+HTML (<code>docs/render_tables.html</code>) files. If you’ve configured
+a remote Git repository (see <code>?wflow_git_remote</code>), click on
+the hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/franfram/stinkbug_targets/blob/6127cce6e3e40bbc70d1706f643512147a195640/analysis/render_tables.Rmd" target="_blank">6127cce</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-22
+</td>
+<td>
+init repo
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
 <p>Setup</p>
 <pre class="r"><code>library(here)</code></pre>
-<pre><code>here() starts at /home/arnle/stinkbugdynamics</code></pre>
+<pre><code>here() starts at /home/arnle/stinkbug_targets_html</code></pre>
 <pre class="r"><code>knitr::opts_knit$set(root.dir = here::here())</code></pre>
 <p>Packages</p>
 <pre class="r"><code>source(&#39;./packages.R&#39;)</code></pre>
@@ -673,7 +697,7 @@ Attaching package: &#39;coda&#39;</code></pre>
 <pre class="r"><code>library(kableExtra)
 
 getwd()</code></pre>
-<pre><code>[1] &quot;/home/arnle/stinkbugdynamics&quot;</code></pre>
+<pre><code>[1] &quot;/home/arnle/stinkbug_targets_html&quot;</code></pre>
 <pre class="r"><code>tar_manifest(names = contains(&quot;table&quot;))</code></pre>
 <pre><code>ℹ Using R 4.2.1 (lockfile was generated with R 4.1.2)
 Loading .Rprofile for the current workflowr project
@@ -689,7 +713,7 @@ Use `renv::restore(packages = &quot;renv&quot;)` to install renv 0.15.2 into the
 ✔ tibble  3.1.8     ✔ dplyr   1.0.9
 ✔ tidyr   1.1.4     ✔ stringr 1.4.0
 ✔ readr   2.1.2     ✔ forcats 0.5.1
-here() starts at /home/arnle/stinkbugdynamics
+here() starts at /home/arnle/stinkbug_targets_html
 Loading required package: rstan
 Loading required package: StanHeaders
 rstan (Version 2.21.2, GitRev: 2e1f913d3ca3)
@@ -736,9 +760,9 @@ Loading required package: viridisLite
 <pre><code># A tibble: 4 × 3
   name                      command                                      pattern
   &lt;chr&gt;                     &lt;chr&gt;                                        &lt;chr&gt;  
-1 table_summary_M2          &quot;render_summary_table(jags_summary = jags_2… &lt;NA&gt;   
-2 table_summary_M3          &quot;render_summary_table(jags_summary = jags_2… &lt;NA&gt;   
-3 table_summary_M1_b0       &quot;render_summary_table(jags_summary = jags_2… &lt;NA&gt;   
+1 table_summary_M1_b0       &quot;render_summary_table(jags_summary = jags_2… &lt;NA&gt;   
+2 table_summary_M2          &quot;render_summary_table(jags_summary = jags_2… &lt;NA&gt;   
+3 table_summary_M3          &quot;render_summary_table(jags_summary = jags_2… &lt;NA&gt;   
 4 table_loo_comparison_2017 &quot;render_loo_comparison_table(loo_model_comp… &lt;NA&gt;   </code></pre>
 <pre class="r"><code>tar_manifest(names = contains(&quot;summary&quot;))</code></pre>
 <pre><code>ℹ Using R 4.2.1 (lockfile was generated with R 4.1.2)
@@ -755,7 +779,7 @@ Use `renv::restore(packages = &quot;renv&quot;)` to install renv 0.15.2 into the
 ✔ tibble  3.1.8     ✔ dplyr   1.0.9
 ✔ tidyr   1.1.4     ✔ stringr 1.4.0
 ✔ readr   2.1.2     ✔ forcats 0.5.1
-here() starts at /home/arnle/stinkbugdynamics
+here() starts at /home/arnle/stinkbug_targets_html
 Loading required package: rstan
 Loading required package: StanHeaders
 rstan (Version 2.21.2, GitRev: 2e1f913d3ca3)
@@ -802,16 +826,16 @@ Loading required package: viridisLite
 <pre><code># A tibble: 10 × 3
    name                          command                                 pattern
    &lt;chr&gt;                         &lt;chr&gt;                                   &lt;chr&gt;  
- 1 jags_2017_summary_model_M3v2  &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 2 jags_2017_summary_model_M3v3  &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 3 jags_2017_summary_model_M1    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 4 jags_2017_summary_model_M2    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 5 jags_2017_summary_model_M3    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 6 jags_2017_summary_model_M1_b0 &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 7 jags_2017_summary_model_M2_b0 &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 8 table_summary_M2              &quot;render_summary_table(jags_summary = j… &lt;NA&gt;   
- 9 table_summary_M3              &quot;render_summary_table(jags_summary = j… &lt;NA&gt;   
-10 table_summary_M1_b0           &quot;render_summary_table(jags_summary = j… &lt;NA&gt;   </code></pre>
+ 1 jags_2017_summary_model_M1_b0 &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 2 jags_2017_summary_model_M1    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 3 jags_2017_summary_model_M2    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 4 jags_2017_summary_model_M3    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 5 jags_2017_summary_model_M2_b0 &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 6 jags_2017_summary_model_M3v2  &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 7 jags_2017_summary_model_M3v3  &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 8 table_summary_M1_b0           &quot;render_summary_table(jags_summary = j… &lt;NA&gt;   
+ 9 table_summary_M2              &quot;render_summary_table(jags_summary = j… &lt;NA&gt;   
+10 table_summary_M3              &quot;render_summary_table(jags_summary = j… &lt;NA&gt;   </code></pre>
 <pre class="r"><code># Stylize model tables and save them
 
 ## Models
@@ -823,13 +847,13 @@ c(&quot;M1_b0&quot;, &quot;M2&quot;, &quot;M3&quot;) %&gt;%
     }
   )</code></pre>
 <pre><code>[[1]]
-[1] &quot;/home/arnle/stinkbugdynamics/output/tables/M1_b0_model_summary.html&quot;
+[1] &quot;/home/arnle/stinkbug_targets_html/output/tables/M1_b0_model_summary.html&quot;
 
 [[2]]
-[1] &quot;/home/arnle/stinkbugdynamics/output/tables/M2_model_summary.html&quot;
+[1] &quot;/home/arnle/stinkbug_targets_html/output/tables/M2_model_summary.html&quot;
 
 [[3]]
-[1] &quot;/home/arnle/stinkbugdynamics/output/tables/M3_model_summary.html&quot;</code></pre>
+[1] &quot;/home/arnle/stinkbug_targets_html/output/tables/M3_model_summary.html&quot;</code></pre>
 <pre class="r"><code>tar_read(table_loo_comparison_2017) </code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -949,6 +973,64 @@ M3
 </td>
 <td style="text-align:right;">
 37.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M3v2
+</td>
+<td style="text-align:right;">
+-27.72
+</td>
+<td style="text-align:right;">
+12.91
+</td>
+<td style="text-align:right;">
+-289.52
+</td>
+<td style="text-align:right;">
+18.80
+</td>
+<td style="text-align:right;">
+98.42
+</td>
+<td style="text-align:right;">
+12.49
+</td>
+<td style="text-align:right;">
+579.05
+</td>
+<td style="text-align:right;">
+37.60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M3v3
+</td>
+<td style="text-align:right;">
+-28.87
+</td>
+<td style="text-align:right;">
+13.62
+</td>
+<td style="text-align:right;">
+-290.67
+</td>
+<td style="text-align:right;">
+19.77
+</td>
+<td style="text-align:right;">
+100.22
+</td>
+<td style="text-align:right;">
+13.41
+</td>
+<td style="text-align:right;">
+581.34
+</td>
+<td style="text-align:right;">
+39.55
 </td>
 </tr>
 </tbody>

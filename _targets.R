@@ -141,20 +141,20 @@ tar_plan(
       merged_sb_noaa_ecmwf_data_2017,
       model_name = "M3"
   ), 
-  ## M3v2 model
-  post_check_M3v2_2017 = compute_posterior_predictive_check(
-      jags_draws = jags_2017_draws_model_M3v2,
-      useful_objects_2017,
-      merged_sb_noaa_ecmwf_data_2017,
-      model_name = "M3v2"
-  ), 
-  ## M3v3 model
-  post_check_M3v3_2017 = compute_posterior_predictive_check(
-      jags_draws = jags_2017_draws_model_M3v3,
-      useful_objects_2017,
-      merged_sb_noaa_ecmwf_data_2017,
-      model_name = "M3v3"
-  ), 
+  # ## M3v2 model
+  # post_check_M3v2_2017 = compute_posterior_predictive_check(
+  #     jags_draws = jags_2017_draws_model_M3v2,
+  #     useful_objects_2017,
+  #     merged_sb_noaa_ecmwf_data_2017,
+  #     model_name = "M3v2"
+  # ), 
+  # ## M3v3 model
+  # post_check_M3v3_2017 = compute_posterior_predictive_check(
+  #     jags_draws = jags_2017_draws_model_M3v3,
+  #     useful_objects_2017,
+  #     merged_sb_noaa_ecmwf_data_2017,
+  #     model_name = "M3v3"
+  # ), 
   # ## M3_N model
   # post_check_M3_N_2017 = compute_posterior_predictive_check(
   #     jags_draws = jags_2017_draws_model_M3,
@@ -285,7 +285,7 @@ tar_plan(
         #"M1_b0_N" = loo_model_M1_b0_N_2017,
         "M2" = loo_model_M2_2017,
         #"M2_N" = loo_model_M2_N_2017,
-        "M3" = loo_model_M3_2017,
+        "M3" = loo_model_M3_2017#,
         # "M3v2" = loo_model_M3v2_2017,
         # "M3v3" = loo_model_M3v3_2017#,
         #"M3_N" = loo_model_M3_N_2017

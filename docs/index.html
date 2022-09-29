@@ -247,7 +247,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Stink bug dynamics</a>
+      <a class="navbar-brand" href="index.html">stinkbug_targets</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -259,18 +259,6 @@ $(document).ready(function () {
 </li>
 <li>
   <a href="license.html">License</a>
-</li>
-<li>
-  <a href="data.html">Data</a>
-</li>
-<li>
-  <a href="pipeline.html">Pipeline</a>
-</li>
-<li>
-  <a href="forecast-per-loc.html">Forecasts M3</a>
-</li>
-<li>
-  <a href="forecast_model-comparison.Rmd">Forecasts model comparison</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -292,7 +280,7 @@ $(document).ready(function () {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -303,8 +291,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -313,17 +301,17 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-29
+<strong>Last updated:</strong> 2022-09-28
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>stinkbugdynamics/</code> <span
-class="glyphicon glyphicon-question-sign" aria-hidden="true"
+<strong>Knit directory:</strong> <code>stinkbug_targets_html/</code>
+<span class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
 </p>
@@ -342,34 +330,33 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong49bed99">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugtargetstree6127cce6e3e40bbc70d1706f643512147a195640targetblank6127ccea">
 <span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong> 49bed99
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/franfram/stinkbug_targets/tree/6127cce6e3e40bbc70d1706f643512147a195640" target="_blank">6127cce</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrong49bed99"
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugtargetstree6127cce6e3e40bbc70d1706f643512147a195640targetblank6127ccea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -378,7 +365,8 @@ and connecting the code version to the results is critical for
 reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version 49bed99.
+The results in this page were generated with repository version
+<a href="https://github.com/franfram/stinkbug_targets/tree/6127cce6e3e40bbc70d1706f643512147a195640" target="_blank">6127cce</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -393,41 +381,35 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    data/ecmwf_data/
-    Ignored:    data/ua/
-    Ignored:    output/plots/
-    Ignored:    output/tables/
+    Ignored:    R/.Rhistory
+    Ignored:    _targets/meta/process
+    Ignored:    _targets/meta/progress
+    Ignored:    _targets/objects/
+    Ignored:    _targets/user/
+    Ignored:    data/
+    Ignored:    output/
     Ignored:    plots/
+    Ignored:    renv/library/
+    Ignored:    renv/staging/
+    Ignored:    ridgeplot.png
+    Ignored:    tabla_wrangled_data_2021.png
+    Ignored:    test.png
+    Ignored:    test_table.png
 
 Untracked files:
-    Untracked:  R/
-    Untracked:  _targets.R
-    Untracked:  _targets/
-    Untracked:  analysis/bma.Rmd
-    Untracked:  analysis/data.Rmd
     Untracked:  analysis/forecast-per-loc.Rmd
-    Untracked:  analysis/forecast_model-comparison.Rmd
-    Untracked:  analysis/logbook.Rmd
-    Untracked:  analysis/parameters.Rmd
-    Untracked:  analysis/pipeline.Rmd
-    Untracked:  analysis/references.bib
-    Untracked:  analysis/render_tables.Rmd
-    Untracked:  analysis/validation.Rmd
-    Untracked:  packages.R
-    Untracked:  renv.lock
-    Untracked:  renv/
+    Untracked:  stinkbug_targets_html.Rproj
 
 Unstaged changes:
-    Modified:   .Rprofile
-    Modified:   .gitignore
-    Modified:   analysis/_site.yml
-    Modified:   analysis/about.Rmd
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/license.Rmd
-    Modified:   data/README.md
-    Modified:   output/README.md
+    Deleted:    analysis/analysis.Rmd
+    Deleted:    analysis/bayesian-stacking.Rmd
+    Deleted:    analysis/plors.Rmd
+    Deleted:    analysis/presupuesto-ssm.rmd
+    Deleted:    analysis/test.rmd
+    Deleted:    stinkbug_targets_nn.Rproj
 
 </code></pre>
 <p>
@@ -477,16 +459,16 @@ Message
 Rmd
 </td>
 <td>
-49bed99
+<a href="https://github.com/franfram/stinkbug_targets/blob/6127cce6e3e40bbc70d1706f643512147a195640/analysis/index.Rmd" target="_blank">6127cce</a>
 </td>
 <td>
 franfram
 </td>
 <td>
-2022-09-29
+2022-09-22
 </td>
 <td>
-Start workflowr project.
+init repo
 </td>
 </tr>
 </tbody>

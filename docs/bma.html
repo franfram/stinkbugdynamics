@@ -36,8 +36,6 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -349,23 +347,23 @@ div.tocify {
   <a href="forecast-per-loc.html">Forecasts M3</a>
 </li>
 <li>
-  <a href="forecast_model-comparison.html">Forecasts model comparison</a>
+  <a href="forecast_model-comparison.Rmd">Forecasts model comparison</a>
+</li>
+<li>
+  <a href="validation.html">Validation</a>
 </li>
 <li>
   <a href="parameters.html">Parameters</a>
 </li>
 <li>
-  <a href="validation.html">Validation</a>
+  <a href="bma.html">BMA</a>
+</li>
+<li>
+  <a href="ua.html">UA</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/franfram/stinkbugdynamics">
-    <span class="fab fa-github"></span>
-     
-    Source code
-  </a>
-</li>
+        
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -409,12 +407,12 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>stinkbugdynamics/</code> <span
+<strong>Knit directory:</strong> <code>stinkbug_dynamics/</code> <span
 class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
@@ -452,99 +450,15 @@ results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
-</p>
-</div>
-<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the
-global environment can affect the analysis in your R Markdown file in
-unknown ways. For reproduciblity it’s best to always run the code in an
-empty environment.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220929code">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Seed:</strong>
-<code>set.seed(20220929)</code> </a>
-</p>
-</div>
-<div id="strongSeedstrongcodesetseed20220929code"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>The command <code>set.seed(20220929)</code> was run prior to running
-the code in the R Markdown file. Setting a seed ensures that any results
-that rely on randomness, e.g. subsampling or permutations, are
-reproducible.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Session information:</strong>
-recorded </a>
-</p>
-</div>
-<div id="strongSessioninformationstrongrecorded"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package
-versions is critical for reproducibility.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Cache:</strong> none </a>
-</p>
-</div>
-<div id="strongCachestrongnone" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be
-confident that you successfully produced the results during this
-run.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
-</p>
-</div>
-<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr
-project makes it easier to run your code on other machines.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreef1e6380f5edbff9c69b8e519cdc81b70fecd9c10targetblankf1e6380a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstree948a367cccb8ee9f0950fa135a7e60fc4f964f95targetblank948a367a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/franfram/stinkbugdynamics/tree/f1e6380f5edbff9c69b8e519cdc81b70fecd9c10" target="_blank">f1e6380</a>
+<a href="https://github.com/franfram/stinkbug_dynamics/tree/948a367cccb8ee9f0950fa135a7e60fc4f964f95" target="_blank">948a367</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreef1e6380f5edbff9c69b8e519cdc81b70fecd9c10targetblankf1e6380a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstree948a367cccb8ee9f0950fa135a7e60fc4f964f95targetblank948a367a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -554,7 +468,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/franfram/stinkbugdynamics/tree/f1e6380f5edbff9c69b8e519cdc81b70fecd9c10" target="_blank">f1e6380</a>.
+<a href="https://github.com/franfram/stinkbug_dynamics/tree/948a367cccb8ee9f0950fa135a7e60fc4f964f95" target="_blank">948a367</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -569,39 +483,24 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    data/ecmwf_data/
-    Ignored:    data/ua/
-    Ignored:    output/plots/
-    Ignored:    output/tables/
+    Ignored:    R/
+    Ignored:    _targets/meta/process
+    Ignored:    _targets/meta/progress
+    Ignored:    _targets/objects/
+    Ignored:    _targets/user/
+    Ignored:    code/
+    Ignored:    data/
+    Ignored:    output/
     Ignored:    plots/
-
-Untracked files:
-    Untracked:  R/
-    Untracked:  _targets.R
-    Untracked:  _targets/
-    Untracked:  analysis/logbook.Rmd
-    Untracked:  analysis/references.bib
-    Untracked:  analysis/render_tables.Rmd
-    Untracked:  code/models/
-    Untracked:  code/tesina_forecastvsdatos_singleloc.rmd
-    Untracked:  code/tesina_forecastvsdatos_todasloc.rmd
-    Untracked:  code/test.R
-    Untracked:  packages.R
-    Untracked:  renv.lock
-    Untracked:  renv/
-
-Unstaged changes:
-    Modified:   .Rprofile
-    Modified:   .gitignore
-    Modified:   analysis/_site.yml
-    Modified:   analysis/forecast-per-loc.Rmd
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/license.Rmd
-    Modified:   code/README.md
-    Modified:   data/README.md
-    Modified:   output/README.md
+    Ignored:    renv/library/
+    Ignored:    renv/staging/
+    Ignored:    ridgeplot.png
+    Ignored:    tabla_wrangled_data_2021.png
+    Ignored:    test.png
+    Ignored:    test_table.png
 
 </code></pre>
 <p>
@@ -651,7 +550,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/franfram/stinkbugdynamics/blob/f1e6380f5edbff9c69b8e519cdc81b70fecd9c10/analysis/bma.Rmd" target="_blank">f1e6380</a>
+<a href="https://github.com/franfram/stinkbug_dynamics/blob/948a367cccb8ee9f0950fa135a7e60fc4f964f95/analysis/bma.Rmd" target="_blank">948a367</a>
 </td>
 <td>
 franfram
@@ -660,7 +559,7 @@ franfram
 2022-09-29
 </td>
 <td>
-update website
+wflow_publish("analysis/bma.Rmd")
 </td>
 </tr>
 <tr>
@@ -668,7 +567,7 @@ update website
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/53af0758c743571ec5047ae86cc088e31a6b0343/docs/bma.html" target="_blank">53af075</a>
+<a href="https://rawcdn.githack.com/franfram/stinkbug_dynamics/8efbc47c3c146f49443a12cd8ce7c5c6adcadbda/docs/bma.html" target="_blank">8efbc47</a>
 </td>
 <td>
 franfram
@@ -685,7 +584,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/franfram/stinkbugdynamics/blob/3baee423516fd694f01e2c0a2bdeeee27cce8f35/analysis/bma.Rmd" target="_blank">3baee42</a>
+<a href="https://github.com/franfram/stinkbug_dynamics/blob/72ea72de36ed9fbc7234664f7e36904b0e66c363/analysis/bma.Rmd" target="_blank">72ea72d</a>
 </td>
 <td>
 franfram
@@ -694,7 +593,41 @@ franfram
 2022-09-29
 </td>
 <td>
-publish website
+add rmds
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/franfram/stinkbug_dynamics/72ea72de36ed9fbc7234664f7e36904b0e66c363/docs/bma.html" target="_blank">72ea72d</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+add rmds
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/franfram/stinkbug_dynamics/c60c549561300a656112e385ab75ca9c47701853/docs/bma.html" target="_blank">c60c549</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+add stuff for website
 </td>
 </tr>
 </tbody>
@@ -704,78 +637,7 @@ publish website
 </div>
 </div>
 </div>
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting
-syntax for authoring HTML, PDF, and MS Word documents. For more details
-on using R Markdown see <a href="http://rmarkdown.rstudio.com"
-class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be
-generated that includes both content as well as the output of any
-embedded R code chunks within the document. You can embed an R code
-chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  </code></pre>
-</div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="figure/bma.Rmd/pressure-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the
-code chunk to prevent printing of the R code that generated the
-plot.</p>
-<br>
-<p>
-<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-Session information
-</button>
-</p>
-<div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.2.1 (2022-06-23)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Pop!_OS 22.04 LTS
-
-Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
-
-locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-
-attached base packages:
-[1] stats     graphics  grDevices datasets  utils     methods   base     
-
-other attached packages:
-[1] workflowr_1.7.0
-
-loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8.3     highr_0.9        bslib_0.4.0      compiler_4.2.1  
- [5] pillar_1.8.1     later_1.3.0      git2r_0.29.0     jquerylib_0.1.4 
- [9] tools_4.2.1      getPass_0.2-2    digest_0.6.29    jsonlite_1.8.0  
-[13] evaluate_0.15    tibble_3.1.8     lifecycle_1.0.2  pkgconfig_2.0.3 
-[17] rlang_1.0.5      cli_3.4.0        rstudioapi_0.14  yaml_2.3.5      
-[21] xfun_0.31        fastmap_1.1.0    httr_1.4.2       stringr_1.4.0   
-[25] knitr_1.39       sass_0.4.2       fs_1.5.2         vctrs_0.4.1     
-[29] rprojroot_2.0.3  glue_1.6.2       R6_2.5.1         processx_3.7.0  
-[33] fansi_1.0.3      rmarkdown_2.11   callr_3.7.2      magrittr_2.0.3  
-[37] whisker_0.4      ps_1.7.1         promises_1.2.0.1 htmltools_0.5.2 
-[41] renv_0.15.5      httpuv_1.6.5     utf8_1.2.2       stringi_1.7.8   
-[45] cachem_1.0.6    </code></pre>
-</div>
-</div>
+<p>sdsd</p>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using

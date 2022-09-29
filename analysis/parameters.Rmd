@@ -5,16 +5,13 @@ date: "2022-09-28"
 ---
 
 
-```{r setup, include=FALSE}
-
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
-
+```{r setup}
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 ```
 
 
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r}
 renv::activate()
 source('./packages.R')
 
@@ -22,19 +19,11 @@ source('./packages.R')
 
 
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 tar_manifest(contains("param"))
 
-post_params <- tar_read(plots_posterior_params_M3)
-
-
-```
-
-
-```{r}
-
-post_params[[1]][[1]] %>% ggplotly() 
-
+tar_read(plots_posterior_params)
 
 ```
+
 
