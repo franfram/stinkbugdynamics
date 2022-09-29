@@ -1,0 +1,29 @@
+---
+title: "parameters"
+output: html_document
+date: "2022-09-28"
+---
+
+
+```{r setup}
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+```
+
+
+
+```{r}
+renv::activate()
+source('./packages.R')
+
+```
+
+
+
+```{r}
+tar_manifest(contains("param"))
+
+tar_read(plots_posterior_params_M3)
+
+```
+
+

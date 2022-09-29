@@ -1,0 +1,32 @@
+---
+title: "pipeline"
+output: html_document
+date: "2022-09-28"
+---
+
+```{r setup}
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+```
+
+
+
+```{r}
+renv::activate()
+source('./packages.R')
+```
+
+
+# Pipeline
+
+```{r}
+tar_visnetwork(level_separation = 600, )
+
+```
+
+
+## Pipeline (no functions)
+
+```{r}
+tar_visnetwork(targets_only = TRUE, level_separation = 700)
+```
+

@@ -1,0 +1,40 @@
+---
+title: "validation"
+output: html_document
+date: "2022-09-28"
+---
+
+```{r setup}
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+```
+
+
+```{r}
+renv::activate()
+source('./packages.R')
+```
+
+
+# Posterior Predictive Checks
+```{r}
+
+tar_manifest(contains("posterior"))
+
+
+tar_read(plots_posterior_params_M3)
+```
+
+
+
+
+# Cross Validation (LOO)
+```{r}
+tar_read(table_loo_comparison_2017) 
+```
+
+
+
+```{r}
+
+```
+

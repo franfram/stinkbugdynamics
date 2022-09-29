@@ -1,0 +1,30 @@
+---
+title: "Data"
+output: html_document
+date: "2022-09-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+```
+
+
+
+
+
+```{r}
+renv::activate()
+source('./packages.R')
+
+```
+
+
+America contains a missing entry from week 7 to 8 + only datapoint with R8, model doesn't perform very well. 
+
+did we properly learn the R8 parameter?
+
+Zavalla last week data is only 3 days apart from previous one, thus the forecast overshoots expecting more change (that of 1 week and not that of 3 days)
+```{r}
+tar_read(merged_sb_noaa_ecmwf_data_2017) %>% reactable()
+```
+

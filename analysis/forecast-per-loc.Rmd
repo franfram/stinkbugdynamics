@@ -1,0 +1,76 @@
+---
+title: "Forecasts"
+output: html_document
+date: "2022-09-28"
+---
+
+```{r setup}
+
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+
+```
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+renv::activate()
+source("./packages.R")
+
+
+```
+
+# América
+
+```{r}
+
+
+tar_read(plots_lastweek_forecast_M3_2017)$plots$density[[1]] %>% ggplotly
+```
+
+# Diego de Alvear
+
+```{r}
+
+tar_read(plots_lastweek_forecast_M3_2017)$plots$density[[2]] %>% ggplotly
+```
+
+# La Francia
+
+```{r}
+
+tar_read(plots_lastweek_forecast_M3_2017)$plots$density[[3]] %>% ggplotly
+```
+
+# Leones
+
+```{r}
+
+tar_read(plots_lastweek_forecast_M3_2017)$plots$density[[4]] %>% ggplotly
+```
+
+# Necochea
+
+```{r}
+
+tar_read(plots_lastweek_forecast_M3_2017)$plots$density[[5]] %>% ggplotly
+```
+
+# Pehuajo
+
+```{r}
+
+tar_read(plots_lastweek_forecast_M3_2017)$plots$density[[6]] %>% ggplotly
+```
+
+# San Vicente
+
+```{r}
+
+tar_read(plots_lastweek_forecast_M3_2017)$plots$density[[7]] %>% ggplotly
+```
+
+# Zavalla
+
+```{r}
+
+tar_read(plots_lastweek_forecast_M3_2017)$plots$density[[8]] %>% ggplotly
+```
