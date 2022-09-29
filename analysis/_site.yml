@@ -1,7 +1,7 @@
-name: "stinkbugdynamics"
+name: Stink bug dynamics
 output_dir: ../docs
 navbar:
-  title: "stinkbugdynamics"
+  title: Stink bug dynamics
   left:
   - text: Home
     href: index.html
@@ -9,6 +9,18 @@ navbar:
     href: about.html
   - text: License
     href: license.html
+  - text: Data
+    href: data.html
+  - text: Pipeline
+    href: pipeline.html
+  - text: Forecasts M3
+    href: forecast-per-loc.html
+  - text: Forecasts model comparison
+    href: forecast_model-comparison.Rmd
+  right:
+  - icon: fab fa-github
+    text: Source code
+    href: https://github.com/franfram/stinkbugdynamics
 output:
   workflowr::wflow_html:
     toc: yes
