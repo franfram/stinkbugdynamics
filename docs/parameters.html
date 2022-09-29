@@ -36,6 +36,15 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -347,11 +356,23 @@ div.tocify {
   <a href="forecast-per-loc.html">Forecasts M3</a>
 </li>
 <li>
-  <a href="forecast_model-comparison.Rmd">Forecasts model comparison</a>
+  <a href="forecast_model-comparison.html">Forecasts model comparison</a>
+</li>
+<li>
+  <a href="parameters.html">Parameters</a>
+</li>
+<li>
+  <a href="validation.html">Validation</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/franfram/stinkbugdynamics">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -522,13 +543,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong3baee42">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreef1e6380f5edbff9c69b8e519cdc81b70fecd9c10targetblankf1e6380a">
 <span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong> 3baee42
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/franfram/stinkbugdynamics/tree/f1e6380f5edbff9c69b8e519cdc81b70fecd9c10" target="_blank">f1e6380</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrong3baee42"
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreef1e6380f5edbff9c69b8e519cdc81b70fecd9c10targetblankf1e6380a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -537,7 +560,8 @@ and connecting the code version to the results is critical for
 reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version 3baee42.
+The results in this page were generated with repository version
+<a href="https://github.com/franfram/stinkbugdynamics/tree/f1e6380f5edbff9c69b8e519cdc81b70fecd9c10" target="_blank">f1e6380</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -579,6 +603,7 @@ Unstaged changes:
     Modified:   .Rprofile
     Modified:   .gitignore
     Modified:   analysis/_site.yml
+    Modified:   analysis/forecast-per-loc.Rmd
     Modified:   analysis/index.Rmd
     Modified:   analysis/license.Rmd
     Modified:   code/README.md
@@ -634,7 +659,41 @@ Message
 Rmd
 </td>
 <td>
-3baee42
+<a href="https://github.com/franfram/stinkbugdynamics/blob/f1e6380f5edbff9c69b8e519cdc81b70fecd9c10/analysis/parameters.Rmd" target="_blank">f1e6380</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+update website
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/53af0758c743571ec5047ae86cc088e31a6b0343/docs/parameters.html" target="_blank">53af075</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/3baee423516fd694f01e2c0a2bdeeee27cce8f35/analysis/parameters.Rmd" target="_blank">3baee42</a>
 </td>
 <td>
 franfram
@@ -653,54 +712,6 @@ publish website
 </div>
 </div>
 </div>
-<pre class="r"><code>knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())</code></pre>
-<pre class="r"><code>renv::activate()</code></pre>
-<pre><code>ℹ Using R 4.2.1 (lockfile was generated with R 4.1.2)</code></pre>
-<pre class="r"><code>source(&#39;./packages.R&#39;)</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-✔ tibble  3.1.8     ✔ dplyr   1.0.9
-✔ tidyr   1.1.4     ✔ stringr 1.4.0
-✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
-<pre><code>here() starts at /home/arnle/stinkbugdynamics</code></pre>
-<pre><code>Loading required package: rstan</code></pre>
-<pre><code>Loading required package: StanHeaders</code></pre>
-<pre><code>rstan (Version 2.21.2, GitRev: 2e1f913d3ca3)</code></pre>
-<pre><code>For execution on a local, multicore CPU with excess RAM we recommend calling
-options(mc.cores = parallel::detectCores()).
-To avoid recompilation of unchanged Stan programs, we recommend calling
-rstan_options(auto_write = TRUE)</code></pre>
-<pre><code>
-Attaching package: &#39;rstan&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:tidyr&#39;:
-
-    extract</code></pre>
-<pre><code>Loading required package: cmdstanr</code></pre>
-<pre><code>This is cmdstanr version 0.4.0.9001</code></pre>
-<pre><code>- CmdStanR documentation and vignettes: mc-stan.org/cmdstanr</code></pre>
-<pre><code>- Use set_cmdstan_path() to set the path to CmdStan</code></pre>
-<pre><code>- Use install_cmdstan() to install CmdStan</code></pre>
-<pre><code>Loading required package: parallel</code></pre>
-<pre><code>rethinking (Version 2.21)</code></pre>
-<pre><code>This is posterior version 1.2.0</code></pre>
-<pre><code>This is loo version 2.4.1</code></pre>
-<pre><code>- Online documentation and vignettes at mc-stan.org/loo</code></pre>
-<pre><code>- As of v2.0.0 loo defaults to 1 core but we recommend using as many as possible. Use the &#39;cores&#39; argument or set options(mc.cores = NUM_CORES) for an entire session. </code></pre>
-<pre><code>Loading required package: coda</code></pre>
-<pre><code>
-Attaching package: &#39;coda&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:jagsUI&#39;:
-
-    traceplot</code></pre>
-<pre><code>The following object is masked from &#39;package:rstan&#39;:
-
-    traceplot</code></pre>
-<pre><code>Linked to JAGS 4.3.1</code></pre>
-<pre><code>Loaded modules: basemod,bugs</code></pre>
-<pre><code>Loading required package: viridisLite</code></pre>
-<pre><code>[conflicted] Will prefer dplyr::filter over any other package
-[conflicted] Will prefer purrr::map over any other package
-[conflicted] Will prefer posterior::var over any other package</code></pre>
 <pre class="r"><code>tar_manifest(contains(&quot;param&quot;))</code></pre>
 <pre><code>ℹ Using R 4.2.1 (lockfile was generated with R 4.1.2)
 Loading .Rprofile for the current workflowr project
@@ -765,41 +776,10 @@ Loading required package: viridisLite
   &lt;chr&gt;                        &lt;chr&gt;                                     &lt;chr&gt;  
 1 plots_posterior_params_M3    &quot;plot_post_params(jags_draws = jags_2017… &lt;NA&gt;   
 2 plots_posterior_params_M1_b0 &quot;plot_post_params(jags_draws = jags_2017… &lt;NA&gt;   </code></pre>
-<pre class="r"><code>tar_read(plots_posterior_params_M3)</code></pre>
-<pre><code>$ridgeplot
-$ridgeplot[[1]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.0931</code></pre>
-<pre><code>Picking joint bandwidth of 0.057</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-$ridgeplot[[2]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.0227</code></pre>
-<pre><code>Picking joint bandwidth of 0.0478</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-$ridgeplot[[3]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.395</code></pre>
-<pre><code>Picking joint bandwidth of 0.0708</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-$ridgeplot[[4]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.0727</code></pre>
-<pre><code>Picking joint bandwidth of 0.0576</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-$ridgeplot[[5]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.0323</code></pre>
-<pre><code>Picking joint bandwidth of 0.0491</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-5.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-$ridgeplot[[6]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.0608</code></pre>
-<pre><code>Picking joint bandwidth of 0.0541</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-6.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-
-$prior_posterior</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>post_params &lt;- tar_read(plots_posterior_params_M3)</code></pre>
+<pre class="r"><code>post_params[[1]][[1]] %&gt;% ggplotly() </code></pre>
+<div id="htmlwidget-bc4771dfab9cbb7d1094" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bc4771dfab9cbb7d1094">{"x":{"data":[{"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":62.8908260689083,"r":12.6193441261934,"b":69.4063926940639,"l":39.1199667911997},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":25.2386882523869},"title":{"text":"muF.VR1.2.3","font":{"color":"rgba(0,0,0,1)","family":"","size":29.2237442922374},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-5.5,5.5],"tickmode":"array","ticktext":["-5.0","-2.5","0.0","2.5","5.0"],"tickvals":[-5,-2.5,0,2.5,5],"categoryorder":"array","categoryarray":["-5.0","-2.5","0.0","2.5","5.0"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":6.30967206309672,"tickwidth":1.14721310238122,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":20.1909506019095},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":1.14721310238122,"zeroline":false,"anchor":"y","title":{"text":"Posterior value","font":{"color":"rgba(0,0,0,1)","family":"","size":25.2386882523869}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,4.0276325038789],"tickmode":"array","ticktext":["M3"],"tickvals":[1],"categoryorder":"array","categoryarray":["M3"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":6.30967206309672,"tickwidth":1.14721310238122,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":20.1909506019095},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":1.14721310238122,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":1.14721310238122,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":3.26413743736578,"font":{"color":"rgba(0,0,0,1)","family":"","size":20.1909506019095}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"616f17973b77":{"fill":{},"x":{},"y":{},"type":"scatter"}},"cur_data":"616f17973b77","visdat":{"616f17973b77":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -847,30 +827,30 @@ other attached packages:
 
 loaded via a namespace (and not attached):
  [1] backports_1.4.1      systemfonts_1.0.4    plyr_1.8.6          
- [4] igraph_1.3.1         lazyeval_0.2.2       RApiSerialize_0.1.0 
- [7] inline_0.3.19        digest_0.6.29        htmltools_0.5.2     
-[10] fansi_1.0.3          magrittr_2.0.3       checkmate_2.0.0     
-[13] memoise_2.0.1        base64url_1.4        tzdb_0.3.0          
-[16] modelr_0.1.8         RcppParallel_5.1.5   matrixStats_0.61.0  
-[19] svglite_2.0.0        prettyunits_1.1.1    colorspace_2.0-2    
-[22] rvest_1.0.2          haven_2.4.3          xfun_0.31           
-[25] callr_3.7.2          crayon_1.5.1         jsonlite_1.8.0      
-[28] stringfish_0.15.5    glue_1.6.2           gtable_0.3.0        
-[31] webshot_0.5.2        V8_4.2.0             distributional_0.3.0
-[34] pkgbuild_1.3.1       shape_1.4.6          abind_1.4-5         
-[37] scales_1.1.1         mvtnorm_1.1-3        DBI_1.1.2           
-[40] Rcpp_1.0.8.3         stats4_4.2.1         htmlwidgets_1.5.4   
-[43] httr_1.4.2           ellipsis_0.3.2       pkgconfig_2.0.3     
-[46] farver_2.1.0         sass_0.4.2           dbplyr_2.1.1        
-[49] utf8_1.2.2           labeling_0.4.2       rlang_1.0.5         
-[52] later_1.3.0          munsell_0.5.0        cellranger_1.1.0    
-[55] tools_4.2.1          cachem_1.0.6         cli_3.4.0           
-[58] generics_0.1.2       broom_0.7.12         evaluate_0.15       
-[61] fastmap_1.1.0        yaml_2.3.5           processx_3.7.0      
-[64] fs_1.5.2             tidygraph_1.2.0      whisker_0.4         
-[67] xml2_1.3.3           compiler_4.2.1       rstudioapi_0.14     
-[70] curl_4.3.2           reprex_2.0.1         bslib_0.4.0         
-[73] stringi_1.7.8        highr_0.9            ps_1.7.1            
+ [4] igraph_1.3.1         lazyeval_0.2.2       crosstalk_1.2.0     
+ [7] RApiSerialize_0.1.0  inline_0.3.19        digest_0.6.29       
+[10] htmltools_0.5.2      fansi_1.0.3          magrittr_2.0.3      
+[13] checkmate_2.0.0      memoise_2.0.1        base64url_1.4       
+[16] tzdb_0.3.0           modelr_0.1.8         RcppParallel_5.1.5  
+[19] matrixStats_0.61.0   svglite_2.0.0        prettyunits_1.1.1   
+[22] colorspace_2.0-2     rvest_1.0.2          haven_2.4.3         
+[25] xfun_0.31            callr_3.7.2          crayon_1.5.1        
+[28] jsonlite_1.8.0       stringfish_0.15.5    glue_1.6.2          
+[31] gtable_0.3.0         webshot_0.5.2        V8_4.2.0            
+[34] distributional_0.3.0 pkgbuild_1.3.1       shape_1.4.6         
+[37] abind_1.4-5          scales_1.1.1         mvtnorm_1.1-3       
+[40] DBI_1.1.2            Rcpp_1.0.8.3         stats4_4.2.1        
+[43] htmlwidgets_1.5.4    httr_1.4.2           ellipsis_0.3.2      
+[46] pkgconfig_2.0.3      farver_2.1.0         sass_0.4.2          
+[49] dbplyr_2.1.1         utf8_1.2.2           labeling_0.4.2      
+[52] rlang_1.0.5          later_1.3.0          munsell_0.5.0       
+[55] cellranger_1.1.0     tools_4.2.1          cachem_1.0.6        
+[58] cli_3.4.0            generics_0.1.2       broom_0.7.12        
+[61] evaluate_0.15        fastmap_1.1.0        yaml_2.3.5          
+[64] processx_3.7.0       fs_1.5.2             tidygraph_1.2.0     
+[67] whisker_0.4          xml2_1.3.3           compiler_4.2.1      
+[70] rstudioapi_0.14      curl_4.3.2           reprex_2.0.1        
+[73] bslib_0.4.0          stringi_1.7.8        ps_1.7.1            
 [76] lattice_0.20-45      tensorA_0.36.2       vctrs_0.4.1         
 [79] pillar_1.8.1         lifecycle_1.0.2      jquerylib_0.1.4     
 [82] data.table_1.14.2    httpuv_1.6.5         R6_2.5.1            
