@@ -15,12 +15,14 @@ navbar:
     href: pipeline.html
   - text: Forecasts M3
     href: forecast-per-loc.html
-  - text: Forecasts model comparison
+  - text: Forecasts model comp
     href: forecast_model-comparison.html
   - text: Validation
     href: validation.html
   - text: Parameters
     href: parameters.html
+  - text: Uncertainty analysis
+    href: ua.html
   - text: BMA
     href: bma.html
   right:

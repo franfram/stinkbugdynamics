@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2022-09-30" />
+
+<title>ua</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Stink bug dynamics</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+<li>
+  <a href="data.html">Data</a>
+</li>
+<li>
+  <a href="pipeline.html">Pipeline</a>
+</li>
+<li>
+  <a href="forecast-per-loc.html">Forecasts M3</a>
+</li>
+<li>
+  <a href="forecast_model-comparison.html">Forecasts model comp</a>
+</li>
+<li>
+  <a href="validation.html">Validation</a>
+</li>
+<li>
+  <a href="parameters.html">Parameters</a>
+</li>
+<li>
+  <a href="ua.html">Uncertainty analysis</a>
+</li>
+<li>
+  <a href="bma.html">BMA</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/myname/stinkbugdynamics">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">ua</h1>
+<h4 class="date">2022-09-30</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-09-30
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>stinkbugdynamics/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220929code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20220929)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220929code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220929)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreeb06550b64b6444f26cbec51e9b88f4d4941d1df7targetblankb06550ba">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/franfram/stinkbugdynamics/tree/b06550b64b6444f26cbec51e9b88f4d4941d1df7" target="_blank">b06550b</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreeb06550b64b6444f26cbec51e9b88f4d4941d1df7targetblankb06550ba"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/franfram/stinkbugdynamics/tree/b06550b64b6444f26cbec51e9b88f4d4941d1df7" target="_blank">b06550b</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    R/.Rhistory
+    Ignored:    _targets/meta/process
+    Ignored:    _targets/meta/progress
+    Ignored:    _targets/objects/
+    Ignored:    _targets/user/
+    Ignored:    data/ecmwf_data/
+    Ignored:    data/ua/
+    Ignored:    output/plots/
+    Ignored:    output/tables/
+    Ignored:    plots/
+    Ignored:    renv/library/
+    Ignored:    renv/staging/
+
+Untracked files:
+    Untracked:  analysis/ua.Rmd
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   analysis/parameters.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(lubridate)</code></pre>
+<pre><code>
+Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    date, intersect, setdiff, union</code></pre>
+<pre class="r"><code>library(jagsUI)
+#library(ggmcmc)
+#library(ggdag)
+library(ggthemes)
+#library(gganimate)
+library(loo)</code></pre>
+<pre><code>This is loo version 2.4.1</code></pre>
+<pre><code>- Online documentation and vignettes at mc-stan.org/loo</code></pre>
+<pre><code>- As of v2.0.0 loo defaults to 1 core but we recommend using as many as possible. Use the &#39;cores&#39; argument or set options(mc.cores = NUM_CORES) for an entire session. </code></pre>
+<pre class="r"><code>library(RColorBrewer)
+library(rethinking)</code></pre>
+<pre><code>Loading required package: rstan</code></pre>
+<pre><code>Loading required package: StanHeaders</code></pre>
+<pre><code>Loading required package: ggplot2</code></pre>
+<pre><code>rstan (Version 2.21.2, GitRev: 2e1f913d3ca3)</code></pre>
+<pre><code>For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)</code></pre>
+<pre><code>
+Attaching package: &#39;rstan&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:jagsUI&#39;:
+
+    traceplot</code></pre>
+<pre><code>Loading required package: cmdstanr</code></pre>
+<pre><code>This is cmdstanr version 0.4.0.9001</code></pre>
+<pre><code>- CmdStanR documentation and vignettes: mc-stan.org/cmdstanr</code></pre>
+<pre><code>- Use set_cmdstan_path() to set the path to CmdStan</code></pre>
+<pre><code>- Use install_cmdstan() to install CmdStan</code></pre>
+<pre><code>Loading required package: parallel</code></pre>
+<pre><code>rethinking (Version 2.21)</code></pre>
+<pre><code>
+Attaching package: &#39;rethinking&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:rstan&#39;:
+
+    stan</code></pre>
+<pre><code>The following object is masked from &#39;package:loo&#39;:
+
+    compare</code></pre>
+<pre><code>The following object is masked from &#39;package:stats&#39;:
+
+    rstudent</code></pre>
+<pre class="r"><code>library(patchwork)
+library(ggridges)
+library(viridis)</code></pre>
+<pre><code>Loading required package: viridisLite</code></pre>
+<pre class="r"><code>library(knitr)
+library(rmarkdown)
+library(plotly)</code></pre>
+<pre><code>
+Attaching package: &#39;plotly&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+
+    last_plot</code></pre>
+<pre><code>The following object is masked from &#39;package:stats&#39;:
+
+    filter</code></pre>
+<pre><code>The following object is masked from &#39;package:graphics&#39;:
+
+    layout</code></pre>
+<pre class="r"><code>library(conflicted)
+library(tidyverse)</code></pre>
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>✔ tibble  3.1.8     ✔ dplyr   1.0.9
+✔ tidyr   1.1.4     ✔ stringr 1.4.0
+✔ readr   2.1.2     ✔ forcats 0.5.1
+✔ purrr   0.3.4     </code></pre>
+<pre class="r"><code>library(here)</code></pre>
+<pre><code>here() starts at /home/arnle/stinkbugdynamics</code></pre>
+<pre class="r"><code>library(rethinking)
+
+conflict_prefer(&quot;filter&quot;, &quot;dplyr&quot;)</code></pre>
+<pre><code>[conflicted] Will prefer dplyr::filter over any other package</code></pre>
+<pre class="r"><code>conflict_prefer(&quot;select&quot;, &quot;dplyr&quot;)</code></pre>
+<pre><code>[conflicted] Will prefer dplyr::select over any other package</code></pre>
+<pre class="r"><code>conflict_prefer(&quot;extract&quot;, &quot;tidyr&quot;)</code></pre>
+<pre><code>[conflicted] Will prefer tidyr::extract over any other package</code></pre>
+<pre class="r"><code>conflict_prefer(&quot;View&quot;, &quot;gganimate&quot;)</code></pre>
+<pre><code>[conflicted] Will prefer gganimate::View over any other package</code></pre>
+<pre class="r"><code>CCsemana_2017 &lt;- read_csv(here(&quot;output&quot;, &quot;CCsemana_2017.csv&quot;))</code></pre>
+<pre><code>Rows: 78 Columns: 44</code></pre>
+<pre><code>── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr   (3): Localidad, Fenologia, Fenologia2
+dbl  (40): nLocalidad, Total.Muestras, Semana, nFenologia, V7.9.10, R1.2, R3...
+date  (1): Fecha
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>## Cantidad de semanas que se midieron en cada Localidad
+nsemana &lt;- CCsemana_2017 %&gt;%
+  group_by(Localidad) %&gt;%
+  tally() %&gt;%
+  rename(&quot;Cantidad de Semanas&quot; = n)
+
+
+## Categórica de Semana
+# Cantidad total de localidades
+nLocalidades &lt;- length(nsemana$Localidad)
+
+Localidades &lt;- as.character(nsemana$Localidad)
+
+
+# Cantidad de semanas por Localidad
+semanasLoc &lt;- rep(0, nLocalidades)
+for (i in 1:nLocalidades) {
+  semanasLoc[i] &lt;- nrow(CCsemana_2017[CCsemana_2017$nLocalidad == i, ])
+}
+
+
+n.muestras &lt;- unique(CCsemana_2017$Total.Muestras)
+
+d_lineas &lt;- CCsemana_2017 %&gt;%
+  group_by(Localidad) %&gt;%
+  summarise(Dist_linea = unique(Dist.linea))
+
+
+## Calculamos el Equivalente Nezara (solo para Adultos)
+### Factores para Equivalente Nezara
+factor.Nv &lt;- 1
+factor.Pg &lt;- 1.6
+factor.Em &lt;- 0.6
+factor.Df &lt;- 0.3
+
+
+lista.datos.incertidumbre.bp &lt;- read_csv(
+  here(&quot;output&quot;, &quot;lista.datos.uncertainty.EqNv.dat.SanVicente&quot;)
+)</code></pre>
+<pre><code>Rows: 8100000 Columns: 7
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (1): Localidad
+dbl (6): cant.muestras, replica, post.sample, semana, post.X.A.F1.EqNv.dat.p...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>## tomamos 5000 muestras de la posterior y luego reordenamos las rows
+datos.plot &lt;- as_tibble(lista.datos.incertidumbre.bp) %&gt;%
+  filter(post.sample == c(1:5000)) %&gt;%
+  arrange(-cant.muestras, replica, post.sample)
+
+datos.plot$cant.muestras &lt;- factor(datos.plot$cant.muestras,
+  levels =
+    c(180, 140, 120, 100, 80, 60, 40, 20, 10)
+)
+datos.plot$replica &lt;- as.factor(datos.plot$replica)
+
+
+
+# Por ahora, el umbral está definido, por cada localidad, como el valor 
+# observado en la última semana
+umbral &lt;- list()
+for (j in 7) {  ## umbral densidad de chinches
+  umbral[[j]] &lt;- filter(CCsemana_2017, Localidad == Localidades[j] &amp;
+                                     Semana == semanasLoc[j]) %&gt;%
+    select(EqNv.redondeado) %&gt;%
+    pull() / n.muestras 
+}
+
+
+
+prob.umbral &lt;- list()
+for (j in 7) {  
+  prob.umbral[[j]] &lt;- lista.datos.incertidumbre.bp %&gt;%
+    filter(Localidad == Localidades[j] &amp; semana == semanasLoc[j]) %&gt;%
+    mutate(&quot;sup.umbral&quot; = post.Y.A.F1.EqNv.dat.planta &gt; umbral[[j]]) %&gt;%
+    group_by(cant.muestras, replica) %&gt;%
+    summarise(&quot;prob.sup.umbral&quot; = ((sum(sup.umbral) / n()) * 100),
+              &quot;Varianza&quot; = var(post.Y.A.F1.EqNv.dat.planta),
+              &quot;Precision&quot; = 1/(var(post.Y.A.F1.EqNv.dat.planta))) %&gt;%
+    ungroup() %&gt;%
+    mutate(&quot;Precision.relativa&quot;= (Precision / (max(Precision))) * 100) %&gt;%
+    arrange(-cant.muestras)
+  
+  prob.umbral[[j]]$cant.muestras &lt;- factor(prob.umbral[[j]]$`cant.muestras`, levels=
+                                    c(180, 140, 120, 100, 80, 60, 40, 20, 10))
+}</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;cant.muestras&#39;. You can override using the
+`.groups` argument.</code></pre>
+<pre class="r"><code>prob.umbral.mean &lt;- list()
+for (j in 7) {
+  prob.umbral.mean[[7]] &lt;- prob.umbral[[7]] %&gt;%
+    group_by(cant.muestras) %&gt;% 
+    summarize(
+      &quot;prob.min&quot; = min(prob.sup.umbral),
+      &quot;prob.prom&quot; = round(mean(prob.sup.umbral), digits = 2),
+      &quot;prob.max&quot; = max(prob.sup.umbral),
+      &quot;prec.rel.prom&quot; = round(mean(Precision.relativa), digits = 2)
+    ) 
+}
+
+
+
+
+
+prob.umbral.mean.tabla &lt;- list()
+for (j in 7) {
+  prob.umbral.mean.tabla[[7]] &lt;- prob.umbral.mean[[7]] %&gt;% 
+    rename(
+      &quot;Probabilidad mínima&quot; = prob.min,
+      &quot;Probabilidad promedio&quot; = prob.prom,
+      &quot;Probabilidad máxima&quot; = prob.max,
+      &quot;Precisión relativa promedio&quot; = prec.rel.prom,
+      &quot;Cantidad de muestras&quot; = cant.muestras
+    )
+}
+
+kable(prob.umbral.mean.tabla[[7]])</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="18%" />
+<col width="18%" />
+<col width="19%" />
+<col width="18%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Cantidad de muestras</th>
+<th align="right">Probabilidad mínima</th>
+<th align="right">Probabilidad promedio</th>
+<th align="right">Probabilidad máxima</th>
+<th align="right">Precisión relativa promedio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">180</td>
+<td align="right">92.00</td>
+<td align="right">92.33</td>
+<td align="right">92.65</td>
+<td align="right">98.81</td>
+</tr>
+<tr class="even">
+<td align="left">140</td>
+<td align="right">75.92</td>
+<td align="right">88.11</td>
+<td align="right">95.72</td>
+<td align="right">77.76</td>
+</tr>
+<tr class="odd">
+<td align="left">120</td>
+<td align="right">79.92</td>
+<td align="right">89.65</td>
+<td align="right">97.66</td>
+<td align="right">64.62</td>
+</tr>
+<tr class="even">
+<td align="left">100</td>
+<td align="right">44.29</td>
+<td align="right">79.21</td>
+<td align="right">98.22</td>
+<td align="right">55.86</td>
+</tr>
+<tr class="odd">
+<td align="left">80</td>
+<td align="right">27.95</td>
+<td align="right">72.13</td>
+<td align="right">95.77</td>
+<td align="right">50.68</td>
+</tr>
+<tr class="even">
+<td align="left">60</td>
+<td align="right">49.90</td>
+<td align="right">77.04</td>
+<td align="right">95.87</td>
+<td align="right">32.34</td>
+</tr>
+<tr class="odd">
+<td align="left">40</td>
+<td align="right">2.58</td>
+<td align="right">47.44</td>
+<td align="right">85.72</td>
+<td align="right">36.36</td>
+</tr>
+<tr class="even">
+<td align="left">20</td>
+<td align="right">12.45</td>
+<td align="right">40.52</td>
+<td align="right">79.61</td>
+<td align="right">17.93</td>
+</tr>
+<tr class="odd">
+<td align="left">10</td>
+<td align="right">12.93</td>
+<td align="right">41.75</td>
+<td align="right">99.50</td>
+<td align="right">7.68</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>textoPrec &lt;- paste0(
+  &quot;Figura 6. Precisión relativa en función del Tamaño Muestral para la Localidad San Vicente. Esta variable&quot;,
+  &quot;\nse calcula respecto a la precisión máxima obtenida entre los distintos tamaños muestrales y réplicas&quot;
+)
+
+
+textoLineplot &lt;- paste0(
+  &quot;Figura 3. Simulaciones de dinámica poblacional de EqNv/planta utilizando distintos tamaños muestrales. Cada panel&quot;,
+  &quot;\nrepresenta un tamaño muestral distinto y, dentro de cada uno de estos, cada color representa una réplica distinta.&quot;,
+  &quot;\nSe grafican 80 simulaciones (líneas) por cada réplica&quot;
+)
+
+  
+## tomamos 100 muestras de la posterior y luego reordenamos las rows 
+datos.plot &lt;- as_tibble(lista.datos.incertidumbre.bp) %&gt;%
+  filter(post.sample == c(1:100)) %&gt;%
+  arrange(-cant.muestras, replica, post.sample)
+
+datos.plot$cant.muestras &lt;- factor(datos.plot$cant.muestras, levels=
+                                     c(180, 140, 120, 100, 80, 60, 40, 20, 10))
+datos.plot$replica &lt;- as.factor(datos.plot$replica)
+
+
+labs_muestras &lt;- c(
+  &#39;10&#39; = &quot;10 samples&quot;,
+  &#39;20&#39; = &quot;20 samples&quot;,
+  &#39;40&#39; = &quot;40 samples&quot;,
+  &#39;60&#39; = &quot;60 samples&quot;,
+  &#39;80&#39; = &quot;80 samples&quot;,
+  &#39;100&#39; = &quot;100 samples&quot;,
+  &#39;120&#39; = &quot;120 samples&quot;,
+  &#39;140&#39; = &quot;140 samples&quot;,
+  &#39;180&#39; = &quot;180 samples&quot;
+)
+
+labs_replicas &lt;- c(
+  &#39;1&#39; = &quot;Replicate 1&quot;,
+  &#39;2&#39; = &quot;Replicate 2&quot;,
+  &#39;3&#39; = &quot;Replicate 3&quot;,
+  &#39;4&#39; = &quot;Replicate 4&quot;,
+  &#39;5&#39; = &quot;Replicate 5&quot;,
+  &#39;6&#39; = &quot;Replicate 6&quot;,
+  &#39;7&#39; = &quot;Replicate 7&quot;,
+  &#39;8&#39; = &quot;Replicate 8&quot;,
+  &#39;9&#39; = &quot;Replicate 9&quot;
+)
+
+scatterplot.incertidumbre &lt;- list()
+ridgeplot.incertidumbre &lt;- list()
+boxplot.incertidumbre &lt;- list()
+
+
+
+textoRidge &lt;- paste0(
+  &quot;Figura 4. Incertidumbre en la predicción de EqNv/Planta en la última semana de los datos para la Localidad San Vicente.&quot;,
+  &quot;\nLa línea discontinua muestra el valor observado en la última semana y cada panel representa el resultado obtenido en una&quot;,
+  &quot;\nréplica distinta.&quot;
+)
+
+
+prob.umbral[[7]]$cant.muestras &lt;- factor(prob.umbral[[7]]$`cant.muestras`, levels=
+                                    c(10, 20, 40, 60, 80, 100, 120, 140, 180))
+
+
+for (j in 7) {
+  ridgeplot.incertidumbre[[j]] &lt;-
+    ggplot(
+      data = filter(datos.plot, Localidad == Localidades[j] &amp; semana == semanasLoc[j]),
+      # usamos semanasLoc[j] porque el forecast es sobre la última semana de los datos
+      aes(x = post.Y.A.F1.EqNv.dat.planta, y = cant.muestras, fill = ..x..)
+    ) +
+    geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
+    scale_fill_viridis(option = &quot;C&quot;) +
+    labs(
+      title = &quot;E density posterior samples during forecast&quot;,
+      subtitle = Localidades[j],
+      y = &quot;Samples&quot;, # &quot;Cantidad \n de \n Muestras&quot;
+      x = &quot; E density forecast uncertainty&quot;#,
+      #caption = textoRidge
+    ) +
+    geom_vline(xintercept = umbral[[j]], linetype = &quot;dashed&quot;) +
+    coord_cartesian(xlim = c(0, 5)) +
+    # scale_x_reverse() +
+    facet_wrap(~replica,
+      labeller = labeller(replica = labs_replicas)
+    ) +
+    # theme_ipsum() +   # library(hrbrthemes) +
+    theme(
+      title = element_text(size = 10),
+      legend.position = &quot;none&quot;,
+      panel.spacing = unit(0.1, &quot;lines&quot;),
+      strip.text.x = element_text(size = 8),
+      axis.text.x = element_text(size = 10),
+      axis.text.y = element_text(size = 8),
+      plot.caption = element_text(hjust = 0)
+    )
+}
+
+
+
+lineplot.incertidumbre &lt;- ggplot() +
+  scale_x_continuous(breaks = seq(1, semanasLoc[7], 1)) +
+  scale_y_continuous(breaks = seq(0, 7, 0.5)) +
+  labs(y=&quot;E density posterior&quot;,
+       x=&quot;Week&quot;#,
+       #title = Localidades[[7]],
+       #caption = textoLineplot
+       ) +
+  geom_segment(data = tibble(&quot;semanasLoc&quot; = semanasLoc[[7]], 
+                             &quot;umbral&quot; = umbral[[7]]),
+               aes(x=(semanasLoc - 0.5),
+                   xend=(semanasLoc + 0.5),
+                   y=umbral,
+                   yend=umbral)) +
+  coord_cartesian(ylim = c(0, 2.5), xlim = c(1,10)) +
+  theme(plot.caption = element_text(hjust = 0)) #+
+  #theme_dark()
+  #theme(panel.background = element_rect(fill = &quot;gray60&quot;)) #+
+  # theme(axis.title.x = element_text(#face = &quot;bold&quot;,
+  #                                   vjust = -0.2), 
+  #       axis.title.y = element_text(#face = &quot;bold&quot;,
+  #                                   vjust = 2))
+
+
+for (i in 1:60) {
+  lineplot.incertidumbre &lt;- lineplot.incertidumbre + 
+    geom_line(
+      data = filter(datos.plot, replica == 1 &amp; post.sample == i), 
+      aes(x = semana, 
+          y = post.Y.A.F1.EqNv.dat.planta), 
+      colour = &quot;#762a83&quot;
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 2 &amp; post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = &quot;#9970ab&quot;
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 3 &amp; post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = &quot;#c2a5cf&quot; # antes &quot;#f7f7f7&quot;
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 4 &amp; post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = &quot;#e7d4e8&quot;
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 5 &amp; post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = &quot;#f7f7f7&quot; # antes &quot;#c2a5cf&quot;
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 6 &amp; post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = &quot;#d9f0d3&quot;
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 7 &amp; post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = &quot;#a6dba0&quot;
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 8 &amp; post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = &quot;#5aae61&quot;
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 9 &amp; post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = &quot;#1b7837&quot;
+    ) +
+    facet_wrap(~cant.muestras,
+               labeller = labeller(cant.muestras = labs_muestras))
+  
+}
+
+
+datos.plot_incertidumbre &lt;- datos.plot %&gt;%
+  filter(Localidad == Localidades[7], semana == semanasLoc[7]) %&gt;%
+  group_by(cant.muestras, replica) %&gt;%
+  summarize(&quot;var&quot; = var(post.Y.A.F1.EqNv.dat.planta)) %&gt;%
+  ungroup()</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;cant.muestras&#39;. You can override using the
+`.groups` argument.</code></pre>
+<pre class="r"><code>datos.plot_incertidumbre_mean &lt;- datos.plot_incertidumbre %&gt;%
+  group_by(cant.muestras) %&gt;%
+  summarize(&quot;mean_var&quot; = mean(var)) %&gt;%
+  mutate(&quot;mean_var_relativa&quot; = mean_var / max(mean_var))
+
+
+datos.plot_incertidumbre_mean$cant.muestras &lt;- factor(datos.plot_incertidumbre_mean$cant.muestras,
+  levels =
+    c(10, 20, 40, 60, 80, 100, 120, 140, 180)
+)
+
+
+# &quot;falta agregarle HPDIs&quot;
+plot_prec_bp &lt;- list()
+for (j in 7) {
+  plot_prec_bp[[j]] &lt;- datos.plot_incertidumbre_mean %&gt;%
+    ggplot() +
+    geom_line(aes(x = cant.muestras, y = mean_var_relativa, group = 1)) +
+    #  scale_x_reverse() +
+    labs(
+      y = &quot;Mean relative uncertainty&quot;,
+      x = &quot;Sample size&quot; # ,
+      # caption = textoPrec
+    ) +
+    theme(
+      axis.title.y = element_text(size = 11),
+      axis.title.x = element_text(size = 11),
+      plot.caption = element_text(
+        hjust = 0,
+        size = 9
+      )
+    )
+}</code></pre>
+<p><br></p>
+<pre class="r"><code>print(lineplot.incertidumbre)</code></pre>
+<p><img src="figure/ua.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" />
+<br></p>
+<p><br></p>
+<pre class="r"><code>ridgeplot.incertidumbre[[7]]</code></pre>
+<pre><code>Picking joint bandwidth of 0.066</code></pre>
+<pre><code>Picking joint bandwidth of 0.0637</code></pre>
+<pre><code>Picking joint bandwidth of 0.0946</code></pre>
+<pre><code>Picking joint bandwidth of 0.0688</code></pre>
+<pre><code>Picking joint bandwidth of 0.072</code></pre>
+<pre><code>Picking joint bandwidth of 0.0746</code></pre>
+<pre><code>Picking joint bandwidth of 0.113</code></pre>
+<pre><code>Picking joint bandwidth of 0.0733</code></pre>
+<pre><code>Picking joint bandwidth of 0.0652</code></pre>
+<p><img src="figure/ua.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" />
+<br></p>
+<p><br></p>
+<pre class="r"><code>plot_prec_bp[[7]]</code></pre>
+<p><img src="figure/ua.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.1 (2022-06-23)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Pop!_OS 22.04 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] parallel  stats     graphics  grDevices datasets  utils     methods  
+[8] base     
+
+other attached packages:
+ [1] here_1.0.1           forcats_0.5.1        stringr_1.4.0       
+ [4] dplyr_1.0.9          purrr_0.3.4          readr_2.1.2         
+ [7] tidyr_1.1.4          tibble_3.1.8         tidyverse_1.3.1     
+[10] conflicted_1.1.0     plotly_4.10.0        rmarkdown_2.11      
+[13] knitr_1.39           viridis_0.6.2        viridisLite_0.4.0   
+[16] ggridges_0.5.3       patchwork_1.1.1      rethinking_2.21     
+[19] cmdstanr_0.4.0.9001  rstan_2.21.2         ggplot2_3.3.5       
+[22] StanHeaders_2.21.0-7 RColorBrewer_1.1-2   loo_2.4.1           
+[25] ggthemes_4.2.4       jagsUI_1.5.2         lubridate_1.8.0     
+[28] workflowr_1.7.0     
+
+loaded via a namespace (and not attached):
+ [1] colorspace_2.0-2     ellipsis_0.3.2       rprojroot_2.0.3     
+ [4] fs_1.5.2             rstudioapi_0.14      farver_2.1.0        
+ [7] bit64_4.0.5          fansi_1.0.3          mvtnorm_1.1-3       
+[10] xml2_1.3.3           codetools_0.2-18     cachem_1.0.6        
+[13] jsonlite_1.8.0       broom_0.7.12         dbplyr_2.1.1        
+[16] rjags_4-13           compiler_4.2.1       httr_1.4.2          
+[19] backports_1.4.1      assertthat_0.2.1     fastmap_1.1.0       
+[22] lazyeval_0.2.2       cli_3.4.0            later_1.3.0         
+[25] htmltools_0.5.2      prettyunits_1.1.1    tools_4.2.1         
+[28] coda_0.19-4          gtable_0.3.0         glue_1.6.2          
+[31] posterior_1.2.0      V8_4.2.0             Rcpp_1.0.8.3        
+[34] cellranger_1.1.0     jquerylib_0.1.4      vctrs_0.4.1         
+[37] tensorA_0.36.2       xfun_0.31            ps_1.7.1            
+[40] rvest_1.0.2          lifecycle_1.0.2      renv_0.15.5         
+[43] getPass_0.2-2        MASS_7.3-57          scales_1.1.1        
+[46] vroom_1.5.7          hms_1.1.2            promises_1.2.0.1    
+[49] inline_0.3.19        yaml_2.3.5           curl_4.3.2          
+[52] memoise_2.0.1        gridExtra_2.3        sass_0.4.2          
+[55] stringi_1.7.8        highr_0.9            checkmate_2.0.0     
+[58] pkgbuild_1.3.1       shape_1.4.6          rlang_1.0.5         
+[61] pkgconfig_2.0.3      matrixStats_0.61.0   distributional_0.3.0
+[64] evaluate_0.15        lattice_0.20-45      labeling_0.4.2      
+[67] htmlwidgets_1.5.4    bit_4.0.4            processx_3.7.0      
+[70] tidyselect_1.1.2     plyr_1.8.6           magrittr_2.0.3      
+[73] R6_2.5.1             generics_0.1.2       DBI_1.1.2           
+[76] pillar_1.8.1         haven_2.4.3          whisker_0.4         
+[79] withr_2.5.0          abind_1.4-5          modelr_0.1.8        
+[82] crayon_1.5.1         utf8_1.2.2           tzdb_0.3.0          
+[85] grid_4.2.1           readxl_1.3.1         data.table_1.14.2   
+[88] callr_3.7.2          git2r_0.29.0         reprex_2.0.1        
+[91] digest_0.6.29        httpuv_1.6.5         RcppParallel_5.1.5  
+[94] stats4_4.2.1         munsell_0.5.0        bslib_0.4.0         </code></pre>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

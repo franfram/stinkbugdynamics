@@ -1,0 +1,416 @@
+---
+title: "ua"
+output: html_document
+date: "2022-09-30"
+---
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+options(tidyverse.quiet = TRUE)
+```
+
+
+
+```{r}
+library(lubridate)
+library(jagsUI)
+#library(ggmcmc)
+#library(ggdag)
+library(ggthemes)
+#library(gganimate)
+library(loo)
+library(RColorBrewer)
+library(rethinking)
+library(patchwork)
+library(ggridges)
+library(viridis)
+library(knitr)
+library(rmarkdown)
+library(plotly)
+library(conflicted)
+library(tidyverse)
+library(here)
+library(rethinking)
+
+conflict_prefer("filter", "dplyr")
+conflict_prefer("select", "dplyr")
+conflict_prefer("extract", "tidyr")
+conflict_prefer("View", "gganimate")
+
+
+CCsemana_2017 <- read_csv(here("output", "CCsemana_2017.csv"))
+
+## Cantidad de semanas que se midieron en cada Localidad
+nsemana <- CCsemana_2017 %>%
+  group_by(Localidad) %>%
+  tally() %>%
+  rename("Cantidad de Semanas" = n)
+
+
+## Categórica de Semana
+# Cantidad total de localidades
+nLocalidades <- length(nsemana$Localidad)
+
+Localidades <- as.character(nsemana$Localidad)
+
+
+# Cantidad de semanas por Localidad
+semanasLoc <- rep(0, nLocalidades)
+for (i in 1:nLocalidades) {
+  semanasLoc[i] <- nrow(CCsemana_2017[CCsemana_2017$nLocalidad == i, ])
+}
+
+
+n.muestras <- unique(CCsemana_2017$Total.Muestras)
+
+d_lineas <- CCsemana_2017 %>%
+  group_by(Localidad) %>%
+  summarise(Dist_linea = unique(Dist.linea))
+
+
+## Calculamos el Equivalente Nezara (solo para Adultos)
+### Factores para Equivalente Nezara
+factor.Nv <- 1
+factor.Pg <- 1.6
+factor.Em <- 0.6
+factor.Df <- 0.3
+
+
+lista.datos.incertidumbre.bp <- read_csv(
+  here("output", "lista.datos.uncertainty.EqNv.dat.SanVicente")
+)
+
+
+
+## tomamos 5000 muestras de la posterior y luego reordenamos las rows
+datos.plot <- as_tibble(lista.datos.incertidumbre.bp) %>%
+  filter(post.sample == c(1:5000)) %>%
+  arrange(-cant.muestras, replica, post.sample)
+
+datos.plot$cant.muestras <- factor(datos.plot$cant.muestras,
+  levels =
+    c(180, 140, 120, 100, 80, 60, 40, 20, 10)
+)
+datos.plot$replica <- as.factor(datos.plot$replica)
+
+
+
+# Por ahora, el umbral está definido, por cada localidad, como el valor 
+# observado en la última semana
+umbral <- list()
+for (j in 7) {  ## umbral densidad de chinches
+  umbral[[j]] <- filter(CCsemana_2017, Localidad == Localidades[j] &
+                                     Semana == semanasLoc[j]) %>%
+    select(EqNv.redondeado) %>%
+    pull() / n.muestras 
+}
+
+
+
+prob.umbral <- list()
+for (j in 7) {  
+  prob.umbral[[j]] <- lista.datos.incertidumbre.bp %>%
+    filter(Localidad == Localidades[j] & semana == semanasLoc[j]) %>%
+    mutate("sup.umbral" = post.Y.A.F1.EqNv.dat.planta > umbral[[j]]) %>%
+    group_by(cant.muestras, replica) %>%
+    summarise("prob.sup.umbral" = ((sum(sup.umbral) / n()) * 100),
+              "Varianza" = var(post.Y.A.F1.EqNv.dat.planta),
+              "Precision" = 1/(var(post.Y.A.F1.EqNv.dat.planta))) %>%
+    ungroup() %>%
+    mutate("Precision.relativa"= (Precision / (max(Precision))) * 100) %>%
+    arrange(-cant.muestras)
+  
+  prob.umbral[[j]]$cant.muestras <- factor(prob.umbral[[j]]$`cant.muestras`, levels=
+                                    c(180, 140, 120, 100, 80, 60, 40, 20, 10))
+}
+
+
+prob.umbral.mean <- list()
+for (j in 7) {
+  prob.umbral.mean[[7]] <- prob.umbral[[7]] %>%
+    group_by(cant.muestras) %>% 
+    summarize(
+      "prob.min" = min(prob.sup.umbral),
+      "prob.prom" = round(mean(prob.sup.umbral), digits = 2),
+      "prob.max" = max(prob.sup.umbral),
+      "prec.rel.prom" = round(mean(Precision.relativa), digits = 2)
+    ) 
+}
+
+
+
+
+
+prob.umbral.mean.tabla <- list()
+for (j in 7) {
+  prob.umbral.mean.tabla[[7]] <- prob.umbral.mean[[7]] %>% 
+    rename(
+      "Probabilidad mínima" = prob.min,
+      "Probabilidad promedio" = prob.prom,
+      "Probabilidad máxima" = prob.max,
+      "Precisión relativa promedio" = prec.rel.prom,
+      "Cantidad de muestras" = cant.muestras
+    )
+}
+
+kable(prob.umbral.mean.tabla[[7]])
+
+ 
+
+textoPrec <- paste0(
+  "Figura 6. Precisión relativa en función del Tamaño Muestral para la Localidad San Vicente. Esta variable",
+  "\nse calcula respecto a la precisión máxima obtenida entre los distintos tamaños muestrales y réplicas"
+)
+
+
+textoLineplot <- paste0(
+  "Figura 3. Simulaciones de dinámica poblacional de EqNv/planta utilizando distintos tamaños muestrales. Cada panel",
+  "\nrepresenta un tamaño muestral distinto y, dentro de cada uno de estos, cada color representa una réplica distinta.",
+  "\nSe grafican 80 simulaciones (líneas) por cada réplica"
+)
+
+  
+## tomamos 100 muestras de la posterior y luego reordenamos las rows 
+datos.plot <- as_tibble(lista.datos.incertidumbre.bp) %>%
+  filter(post.sample == c(1:100)) %>%
+  arrange(-cant.muestras, replica, post.sample)
+
+datos.plot$cant.muestras <- factor(datos.plot$cant.muestras, levels=
+                                     c(180, 140, 120, 100, 80, 60, 40, 20, 10))
+datos.plot$replica <- as.factor(datos.plot$replica)
+
+
+labs_muestras <- c(
+  '10' = "10 samples",
+  '20' = "20 samples",
+  '40' = "40 samples",
+  '60' = "60 samples",
+  '80' = "80 samples",
+  '100' = "100 samples",
+  '120' = "120 samples",
+  '140' = "140 samples",
+  '180' = "180 samples"
+)
+
+labs_replicas <- c(
+  '1' = "Replicate 1",
+  '2' = "Replicate 2",
+  '3' = "Replicate 3",
+  '4' = "Replicate 4",
+  '5' = "Replicate 5",
+  '6' = "Replicate 6",
+  '7' = "Replicate 7",
+  '8' = "Replicate 8",
+  '9' = "Replicate 9"
+)
+
+scatterplot.incertidumbre <- list()
+ridgeplot.incertidumbre <- list()
+boxplot.incertidumbre <- list()
+
+
+
+textoRidge <- paste0(
+  "Figura 4. Incertidumbre en la predicción de EqNv/Planta en la última semana de los datos para la Localidad San Vicente.",
+  "\nLa línea discontinua muestra el valor observado en la última semana y cada panel representa el resultado obtenido en una",
+  "\nréplica distinta."
+)
+
+
+prob.umbral[[7]]$cant.muestras <- factor(prob.umbral[[7]]$`cant.muestras`, levels=
+                                    c(10, 20, 40, 60, 80, 100, 120, 140, 180))
+
+
+for (j in 7) {
+  ridgeplot.incertidumbre[[j]] <-
+    ggplot(
+      data = filter(datos.plot, Localidad == Localidades[j] & semana == semanasLoc[j]),
+      # usamos semanasLoc[j] porque el forecast es sobre la última semana de los datos
+      aes(x = post.Y.A.F1.EqNv.dat.planta, y = cant.muestras, fill = ..x..)
+    ) +
+    geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
+    scale_fill_viridis(option = "C") +
+    labs(
+      title = "E density posterior samples during forecast",
+      subtitle = Localidades[j],
+      y = "Samples", # "Cantidad \n de \n Muestras"
+      x = " E density forecast uncertainty"#,
+      #caption = textoRidge
+    ) +
+    geom_vline(xintercept = umbral[[j]], linetype = "dashed") +
+    coord_cartesian(xlim = c(0, 5)) +
+    # scale_x_reverse() +
+    facet_wrap(~replica,
+      labeller = labeller(replica = labs_replicas)
+    ) +
+    # theme_ipsum() +   # library(hrbrthemes) +
+    theme(
+      title = element_text(size = 10),
+      legend.position = "none",
+      panel.spacing = unit(0.1, "lines"),
+      strip.text.x = element_text(size = 8),
+      axis.text.x = element_text(size = 10),
+      axis.text.y = element_text(size = 8),
+      plot.caption = element_text(hjust = 0)
+    )
+}
+
+
+
+lineplot.incertidumbre <- ggplot() +
+  scale_x_continuous(breaks = seq(1, semanasLoc[7], 1)) +
+  scale_y_continuous(breaks = seq(0, 7, 0.5)) +
+  labs(y="E density posterior",
+       x="Week"#,
+       #title = Localidades[[7]],
+       #caption = textoLineplot
+       ) +
+  geom_segment(data = tibble("semanasLoc" = semanasLoc[[7]], 
+                             "umbral" = umbral[[7]]),
+               aes(x=(semanasLoc - 0.5),
+                   xend=(semanasLoc + 0.5),
+                   y=umbral,
+                   yend=umbral)) +
+  coord_cartesian(ylim = c(0, 2.5), xlim = c(1,10)) +
+  theme(plot.caption = element_text(hjust = 0)) #+
+  #theme_dark()
+  #theme(panel.background = element_rect(fill = "gray60")) #+
+  # theme(axis.title.x = element_text(#face = "bold",
+  #                                   vjust = -0.2), 
+  #       axis.title.y = element_text(#face = "bold",
+  #                                   vjust = 2))
+
+
+for (i in 1:60) {
+  lineplot.incertidumbre <- lineplot.incertidumbre + 
+    geom_line(
+      data = filter(datos.plot, replica == 1 & post.sample == i), 
+      aes(x = semana, 
+          y = post.Y.A.F1.EqNv.dat.planta), 
+      colour = "#762a83"
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 2 & post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = "#9970ab"
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 3 & post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = "#c2a5cf" # antes "#f7f7f7"
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 4 & post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = "#e7d4e8"
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 5 & post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = "#f7f7f7" # antes "#c2a5cf"
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 6 & post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = "#d9f0d3"
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 7 & post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = "#a6dba0"
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 8 & post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = "#5aae61"
+    ) +
+    geom_line(
+      data = filter(datos.plot, replica == 9 & post.sample == i),
+      aes(x = semana,
+          y = post.Y.A.F1.EqNv.dat.planta),
+      colour = "#1b7837"
+    ) +
+    facet_wrap(~cant.muestras,
+               labeller = labeller(cant.muestras = labs_muestras))
+  
+}
+
+
+datos.plot_incertidumbre <- datos.plot %>%
+  filter(Localidad == Localidades[7], semana == semanasLoc[7]) %>%
+  group_by(cant.muestras, replica) %>%
+  summarize("var" = var(post.Y.A.F1.EqNv.dat.planta)) %>%
+  ungroup()
+
+datos.plot_incertidumbre_mean <- datos.plot_incertidumbre %>%
+  group_by(cant.muestras) %>%
+  summarize("mean_var" = mean(var)) %>%
+  mutate("mean_var_relativa" = mean_var / max(mean_var))
+
+
+datos.plot_incertidumbre_mean$cant.muestras <- factor(datos.plot_incertidumbre_mean$cant.muestras,
+  levels =
+    c(10, 20, 40, 60, 80, 100, 120, 140, 180)
+)
+
+
+# "falta agregarle HPDIs"
+plot_prec_bp <- list()
+for (j in 7) {
+  plot_prec_bp[[j]] <- datos.plot_incertidumbre_mean %>%
+    ggplot() +
+    geom_line(aes(x = cant.muestras, y = mean_var_relativa, group = 1)) +
+    #  scale_x_reverse() +
+    labs(
+      y = "Mean relative uncertainty",
+      x = "Sample size" # ,
+      # caption = textoPrec
+    ) +
+    theme(
+      axis.title.y = element_text(size = 11),
+      axis.title.x = element_text(size = 11),
+      plot.caption = element_text(
+        hjust = 0,
+        size = 9
+      )
+    )
+}
+
+
+```
+
+<br>  
+```{r}
+
+print(lineplot.incertidumbre)
+```
+<br>  
+
+<br>
+```{r}
+ridgeplot.incertidumbre[[7]]
+```
+<br>  
+
+<br>  
+
+
+```{r}
+plot_prec_bp[[7]]
+
+
+
+
+
+```

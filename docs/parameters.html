@@ -36,6 +36,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -347,7 +349,7 @@ div.tocify {
   <a href="forecast-per-loc.html">Forecasts M3</a>
 </li>
 <li>
-  <a href="forecast_model-comparison.Rmd">Forecasts model comparison</a>
+  <a href="forecast_model-comparison.html">Forecasts model comp</a>
 </li>
 <li>
   <a href="validation.html">Validation</a>
@@ -356,14 +358,20 @@ div.tocify {
   <a href="parameters.html">Parameters</a>
 </li>
 <li>
-  <a href="bma.html">BMA</a>
+  <a href="ua.html">Uncertainty analysis</a>
 </li>
 <li>
-  <a href="ua.html">UA</a>
+  <a href="bma.html">BMA</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/myname/stinkbugdynamics">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -382,7 +390,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -393,8 +401,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -403,16 +411,16 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-29
+<strong>Last updated:</strong> 2022-09-30
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>stinkbug_dynamics/</code> <span
+<strong>Knit directory:</strong> <code>stinkbugdynamics/</code> <span
 class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
@@ -432,18 +440,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -467,16 +478,16 @@ empty environment.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20211230code">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220929code">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Seed:</strong>
-<code>set.seed(20211230)</code> </a>
+<code>set.seed(20220929)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20211230code"
+<div id="strongSeedstrongcodesetseed20220929code"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20211230)</code> was run prior to running
+<p>The command <code>set.seed(20220929)</code> was run prior to running
 the code in the R Markdown file. Setting a seed ensures that any results
 that rely on randomness, e.g. subsampling or permutations, are
 reproducible.</p>
@@ -534,15 +545,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstree8efbc47c3c146f49443a12cd8ce7c5c6adcadbdatargetblank8efbc47a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreeb06550b64b6444f26cbec51e9b88f4d4941d1df7targetblankb06550ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/franfram/stinkbug_dynamics/tree/8efbc47c3c146f49443a12cd8ce7c5c6adcadbda" target="_blank">8efbc47</a>
+<a href="https://github.com/franfram/stinkbugdynamics/tree/b06550b64b6444f26cbec51e9b88f4d4941d1df7" target="_blank">b06550b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstree8efbc47c3c146f49443a12cd8ce7c5c6adcadbdatargetblank8efbc47a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreeb06550b64b6444f26cbec51e9b88f4d4941d1df7targetblankb06550ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -552,7 +563,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/franfram/stinkbug_dynamics/tree/8efbc47c3c146f49443a12cd8ce7c5c6adcadbda" target="_blank">8efbc47</a>.
+<a href="https://github.com/franfram/stinkbugdynamics/tree/b06550b64b6444f26cbec51e9b88f4d4941d1df7" target="_blank">b06550b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -567,24 +578,33 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    R/
+    Ignored:    R/.Rhistory
     Ignored:    _targets/meta/process
     Ignored:    _targets/meta/progress
     Ignored:    _targets/objects/
     Ignored:    _targets/user/
-    Ignored:    code/
-    Ignored:    data/
-    Ignored:    output/
+    Ignored:    data/ecmwf_data/
+    Ignored:    data/ua/
+    Ignored:    output/plots/
+    Ignored:    output/tables/
     Ignored:    plots/
     Ignored:    renv/library/
     Ignored:    renv/staging/
-    Ignored:    ridgeplot.png
-    Ignored:    tabla_wrangled_data_2021.png
-    Ignored:    test.png
-    Ignored:    test_table.png
+
+Untracked files:
+    Untracked:  analysis/ua.Rmd
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   analysis/bma.Rmd
+    Modified:   analysis/data.Rmd
+    Modified:   analysis/forecast-per-loc.Rmd
+    Modified:   analysis/forecast_model-comparison.Rmd
+    Modified:   analysis/parameters.Rmd
+    Modified:   analysis/pipeline.Rmd
+    Modified:   analysis/validation.Rmd
 
 </code></pre>
 <p>
@@ -635,7 +655,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/franfram/stinkbug_dynamics/blob/72ea72de36ed9fbc7234664f7e36904b0e66c363/analysis/parameters.Rmd" target="_blank">72ea72d</a>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/ae8e379b5cbfbb4efb7816ff4215bacec7e49676/analysis/parameters.Rmd" target="_blank">ae8e379</a>
 </td>
 <td>
 franfram
@@ -644,7 +664,7 @@ franfram
 2022-09-29
 </td>
 <td>
-add rmds
+website test
 </td>
 </tr>
 <tr>
@@ -652,7 +672,7 @@ add rmds
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/franfram/stinkbug_dynamics/c60c549561300a656112e385ab75ca9c47701853/docs/parameters.html" target="_blank">c60c549</a>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/ae8e379b5cbfbb4efb7816ff4215bacec7e49676/docs/parameters.html" target="_blank">ae8e379</a>
 </td>
 <td>
 franfram
@@ -661,7 +681,75 @@ franfram
 2022-09-29
 </td>
 <td>
-add stuff for website
+website test
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/50ccec45a740c60e95d0435506abe2eb3450f652/docs/parameters.html" target="_blank">50ccec4</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/f1e6380f5edbff9c69b8e519cdc81b70fecd9c10/analysis/parameters.Rmd" target="_blank">f1e6380</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+update website
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/53af0758c743571ec5047ae86cc088e31a6b0343/docs/parameters.html" target="_blank">53af075</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/3baee423516fd694f01e2c0a2bdeeee27cce8f35/analysis/parameters.Rmd" target="_blank">3baee42</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+publish website
 </td>
 </tr>
 </tbody>
@@ -671,147 +759,19 @@ add stuff for website
 </div>
 </div>
 </div>
-<pre class="r"><code>knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())</code></pre>
-<pre class="r"><code>renv::activate()</code></pre>
-<pre><code>ℹ Using R 4.2.1 (lockfile was generated with R 4.1.2)</code></pre>
-<pre class="r"><code>source(&#39;./packages.R&#39;)</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-✔ tibble  3.1.8     ✔ dplyr   1.0.9
-✔ tidyr   1.1.4     ✔ stringr 1.4.0
-✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
-<pre><code>here() starts at /home/arnle/stinkbug_dynamics</code></pre>
-<pre><code>Loading required package: rstan</code></pre>
-<pre><code>Loading required package: StanHeaders</code></pre>
-<pre><code>rstan (Version 2.21.2, GitRev: 2e1f913d3ca3)</code></pre>
-<pre><code>For execution on a local, multicore CPU with excess RAM we recommend calling
-options(mc.cores = parallel::detectCores()).
-To avoid recompilation of unchanged Stan programs, we recommend calling
-rstan_options(auto_write = TRUE)</code></pre>
-<pre><code>
-Attaching package: &#39;rstan&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:tidyr&#39;:
-
-    extract</code></pre>
-<pre><code>Loading required package: cmdstanr</code></pre>
-<pre><code>This is cmdstanr version 0.4.0.9001</code></pre>
-<pre><code>- CmdStanR documentation and vignettes: mc-stan.org/cmdstanr</code></pre>
-<pre><code>- Use set_cmdstan_path() to set the path to CmdStan</code></pre>
-<pre><code>- Use install_cmdstan() to install CmdStan</code></pre>
-<pre><code>Loading required package: parallel</code></pre>
-<pre><code>rethinking (Version 2.21)</code></pre>
-<pre><code>This is posterior version 1.2.0</code></pre>
-<pre><code>This is loo version 2.4.1</code></pre>
-<pre><code>- Online documentation and vignettes at mc-stan.org/loo</code></pre>
-<pre><code>- As of v2.0.0 loo defaults to 1 core but we recommend using as many as possible. Use the &#39;cores&#39; argument or set options(mc.cores = NUM_CORES) for an entire session. </code></pre>
-<pre><code>Loading required package: coda</code></pre>
-<pre><code>
-Attaching package: &#39;coda&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:jagsUI&#39;:
-
-    traceplot</code></pre>
-<pre><code>The following object is masked from &#39;package:rstan&#39;:
-
-    traceplot</code></pre>
-<pre><code>Linked to JAGS 4.3.1</code></pre>
-<pre><code>Loaded modules: basemod,bugs</code></pre>
-<pre><code>Loading required package: viridisLite</code></pre>
-<pre><code>[conflicted] Will prefer dplyr::filter over any other package
-[conflicted] Will prefer purrr::map over any other package
-[conflicted] Will prefer posterior::var over any other package</code></pre>
-<pre class="r"><code>tar_manifest(contains(&quot;param&quot;))</code></pre>
-<pre><code>ℹ Using R 4.2.1 (lockfile was generated with R 4.1.2)
-Loading .Rprofile for the current workflowr project
-This is workflowr version 1.7.0
-Run ?workflowr for help getting started
-Warning message:
-renv 0.15.5 was loaded from project library, but this project is configured to use renv 0.15.2.
-Use `renv::record(&quot;renv@0.15.5&quot;)` to record renv 0.15.5 in the lockfile.
-Use `renv::restore(packages = &quot;renv&quot;)` to install renv 0.15.2 into the project library. 
-ℹ Using R 4.2.1 (lockfile was generated with R 4.1.2)
-── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
-✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-✔ tibble  3.1.8     ✔ dplyr   1.0.9
-✔ tidyr   1.1.4     ✔ stringr 1.4.0
-✔ readr   2.1.2     ✔ forcats 0.5.1
-here() starts at /home/arnle/stinkbug_dynamics
-Loading required package: rstan
-Loading required package: StanHeaders
-rstan (Version 2.21.2, GitRev: 2e1f913d3ca3)
-For execution on a local, multicore CPU with excess RAM we recommend calling
-options(mc.cores = parallel::detectCores()).
-To avoid recompilation of unchanged Stan programs, we recommend calling
-rstan_options(auto_write = TRUE)
-
-Attaching package: ‘rstan’
-
-The following object is masked from ‘package:tidyr’:
-
-    extract
-
-Loading required package: cmdstanr
-This is cmdstanr version 0.4.0.9001
-- CmdStanR documentation and vignettes: mc-stan.org/cmdstanr
-- Use set_cmdstan_path() to set the path to CmdStan
-- Use install_cmdstan() to install CmdStan
-Loading required package: parallel
-rethinking (Version 2.21)
-This is posterior version 1.2.0
-This is loo version 2.4.1
-- Online documentation and vignettes at mc-stan.org/loo
-- As of v2.0.0 loo defaults to 1 core but we recommend using as many as possible. Use the &#39;cores&#39; argument or set options(mc.cores = NUM_CORES) for an entire session. 
-Loading required package: coda
-
-Attaching package: ‘coda’
-
-The following object is masked from ‘package:jagsUI’:
-
-    traceplot
-
-The following object is masked from ‘package:rstan’:
-
-    traceplot
-
-Linked to JAGS 4.3.1
-Loaded modules: basemod,bugs
-Loading required package: viridisLite
-[conflicted] Will prefer dplyr::filter over any other package
-[conflicted] Will prefer purrr::map over any other package
-[conflicted] Will prefer posterior::var over any other package</code></pre>
-<pre><code># A tibble: 1 × 3
-  name                   command                                         pattern
-  &lt;chr&gt;                  &lt;chr&gt;                                           &lt;chr&gt;  
-1 plots_posterior_params &quot;plot_post_params(jags_draws = jags_2017_draws… &lt;NA&gt;   </code></pre>
-<pre class="r"><code>tar_read(plots_posterior_params)</code></pre>
-<pre><code>$ridgeplot
-$ridgeplot[[1]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.0437</code></pre>
-<pre><code>Picking joint bandwidth of 0.0494</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-$ridgeplot[[2]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.109</code></pre>
-<pre><code>Picking joint bandwidth of 0.0585</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-$ridgeplot[[3]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.0378</code></pre>
-<pre><code>Picking joint bandwidth of 0.0499</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-$ridgeplot[[4]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.0859</code></pre>
-<pre><code>Picking joint bandwidth of 0.0587</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-$ridgeplot[[5]]</code></pre>
-<pre><code>Picking joint bandwidth of 0.299</code></pre>
-<pre><code>Picking joint bandwidth of 0.147</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-5.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-
-$prior_posterior</code></pre>
-<p><img src="figure/parameters.Rmd/unnamed-chunk-2-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>post_params &lt;- tar_read(plots_posterior_params_M3)</code></pre>
+<pre class="r"><code>post_params[[1]][[1]] </code></pre>
+<p><img src="figure/parameters.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>post_params[[1]][[2]] </code></pre>
+<p><img src="figure/parameters.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>post_params[[1]][[3]] </code></pre>
+<p><img src="figure/parameters.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>post_params[[1]][[4]] </code></pre>
+<p><img src="figure/parameters.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>post_params[[1]][[5]] </code></pre>
+<p><img src="figure/parameters.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>post_params[[1]][[6]] </code></pre>
+<p><img src="figure/parameters.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
