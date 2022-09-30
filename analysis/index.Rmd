@@ -7,19 +7,3 @@ output:
 editor_options:
   chunk_output_type: console
 ---
-
-Welcome to the research website of "Hierarchical forecasting models of stink bug population dynamics for pest management" (paper citation).
-
-**Abstract**
-
-The intensification of agricultural production has been accompanied by increasing pressure from pests. This is resulting in a substantial increase in the use of synthetic pesticides, many of which have negative consequences on the environment and the sustainability of agricultural activity.
-
-Integrated pest management (IPM) provides a framework for the development and use of sustainable yet effective control strategies. It promotes, among other things, the monitoring of pest population dynamics and the use of control decision tools, such as action thresholds and predictive models.
-
-In this work, we aimed to develop a predictive model of stink bug abundance to increase the efficacy and efficiency of IPM-based pest control tactics. We use an empirical and Bayesian modelling approach based on an auto-regressive structure that explicitly takes into account the (noisy and biased) observation process (i.e., state-space model) of stink bug (Pentadomidae) population dynamics.
-
-During the summer of 2017, stink bug abundance was measured in 8 different localities in Argentina for at least 8 weeks, by taking 180 weekly samples using the vertical beat sheet method. With this data, along with soybean crop phenology and meteorological data, we, (1) made short-term forecasts of stink bug abundance, (2) evaluated the predictive capacity of different variants of the model using WAIC and LOO-CV, and (3) analyzed how the uncertainty of the predictions of our best performing model vary as a function of weekly sample size.
-
-The forecasts made with our best-performing model showed a reasonable degree of accuracy and precision, and the uncertainty analysis suggests a sample size of 60 to obtain a good balance between precision and sampling effort. One way in which predictive performance could be improved is by having a robust measure of vertical beat sheet error and bias and how these vary. Such data would also allow us to have a reliable estimate of the true population size.
-
-We conclude that state-space models are useful for making stink bug abundance forecasts, and can provide growers with a tool to make better-informed decisions about the timing and necessity of carrying out pest controls.

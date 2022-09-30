@@ -27,7 +27,7 @@ source("./packages.R")
 
 ```{r}
 
-tar_read(plots_lastweek_forecast_allmodels_2017)$per_loc_density[[1]] %>% ggplotly
+tar_read(plots_lastweek_forecast_allmodels_2017)$per_loc_density[[1]]
 ```
 
 # Diego de Alvear

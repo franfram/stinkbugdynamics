@@ -463,8 +463,8 @@ plot_post_params <- function(
             legend.position = "none",
             axis.title.y = element_blank(),
             axis.text.y = element_text(angle = 45, size = 12),
-            axis.text.x = element_text(size = 12),
-            plot.title = element_text(size = 20)
+            axis.text.x = element_text(size = 10),
+            plot.title = element_text(size = 15)
           )
         }
       )
@@ -495,7 +495,7 @@ plot_post_params <- function(
               legend.position = "none",
               axis.title.y = element_blank(),
               axis.text.y = element_text(angle = 90),
-              plot.title = element_text(size = 22)
+              plot.title = element_text(size = 15)
             )
         }
       )
