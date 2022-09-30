@@ -39,6 +39,8 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -327,7 +329,7 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">stinkbug_targets</a>
+      <a class="navbar-brand" href="index.html">Stink bug dynamics</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -340,9 +342,39 @@ div.tocify {
 <li>
   <a href="license.html">License</a>
 </li>
+<li>
+  <a href="data.html">Data</a>
+</li>
+<li>
+  <a href="pipeline.html">Pipeline</a>
+</li>
+<li>
+  <a href="forecast-per-loc.html">Forecasts M3</a>
+</li>
+<li>
+  <a href="forecast_model-comparison.html">Forecasts model comp</a>
+</li>
+<li>
+  <a href="validation.html">Validation</a>
+</li>
+<li>
+  <a href="parameters.html">Parameters</a>
+</li>
+<li>
+  <a href="ua.html">Uncertainty analysis</a>
+</li>
+<li>
+  <a href="bma.html">BMA</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/myname/stinkbugdynamics">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -383,7 +415,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-28
+<strong>Last updated:</strong> 2022-09-30
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -392,8 +424,8 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>stinkbug_targets_html/</code>
-<span class="glyphicon glyphicon-question-sign" aria-hidden="true"
+<strong>Knit directory:</strong> <code>stinkbugdynamics/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
 </p>
@@ -447,16 +479,16 @@ empty environment.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20211230code">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220929code">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Seed:</strong>
-<code>set.seed(20211230)</code> </a>
+<code>set.seed(20220929)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20211230code"
+<div id="strongSeedstrongcodesetseed20220929code"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20211230)</code> was run prior to running
+<p>The command <code>set.seed(20220929)</code> was run prior to running
 the code in the R Markdown file. Setting a seed ensures that any results
 that rely on randomness, e.g. subsampling or permutations, are
 reproducible.</p>
@@ -514,15 +546,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugtargetstree6127cce6e3e40bbc70d1706f643512147a195640targetblank6127ccea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreeb06550b64b6444f26cbec51e9b88f4d4941d1df7targetblankb06550ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/franfram/stinkbug_targets/tree/6127cce6e3e40bbc70d1706f643512147a195640" target="_blank">6127cce</a>
+<a href="https://github.com/franfram/stinkbugdynamics/tree/b06550b64b6444f26cbec51e9b88f4d4941d1df7" target="_blank">b06550b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugtargetstree6127cce6e3e40bbc70d1706f643512147a195640targetblank6127ccea"
+id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreeb06550b64b6444f26cbec51e9b88f4d4941d1df7targetblankb06550ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -532,7 +564,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/franfram/stinkbug_targets/tree/6127cce6e3e40bbc70d1706f643512147a195640" target="_blank">6127cce</a>.
+<a href="https://github.com/franfram/stinkbugdynamics/tree/b06550b64b6444f26cbec51e9b88f4d4941d1df7" target="_blank">b06550b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -547,7 +579,6 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    R/.Rhistory
@@ -555,27 +586,26 @@ Ignored files:
     Ignored:    _targets/meta/progress
     Ignored:    _targets/objects/
     Ignored:    _targets/user/
-    Ignored:    data/
-    Ignored:    output/
+    Ignored:    data/ecmwf_data/
+    Ignored:    data/ua/
+    Ignored:    output/plots/
+    Ignored:    output/tables/
     Ignored:    plots/
     Ignored:    renv/library/
     Ignored:    renv/staging/
-    Ignored:    ridgeplot.png
-    Ignored:    tabla_wrangled_data_2021.png
-    Ignored:    test.png
-    Ignored:    test_table.png
 
 Untracked files:
-    Untracked:  analysis/forecast-per-loc.Rmd
-    Untracked:  stinkbug_targets_html.Rproj
+    Untracked:  analysis/ua.Rmd
 
 Unstaged changes:
-    Deleted:    analysis/analysis.Rmd
-    Deleted:    analysis/bayesian-stacking.Rmd
-    Deleted:    analysis/plors.Rmd
-    Deleted:    analysis/presupuesto-ssm.rmd
-    Deleted:    analysis/test.rmd
-    Deleted:    stinkbug_targets_nn.Rproj
+    Modified:   analysis/_site.yml
+    Modified:   analysis/bma.Rmd
+    Modified:   analysis/data.Rmd
+    Modified:   analysis/forecast-per-loc.Rmd
+    Modified:   analysis/forecast_model-comparison.Rmd
+    Modified:   analysis/parameters.Rmd
+    Modified:   analysis/pipeline.Rmd
+    Modified:   analysis/validation.Rmd
 
 </code></pre>
 <p>
@@ -623,19 +653,53 @@ Message
 <tbody>
 <tr>
 <td>
-Rmd
+html
 </td>
 <td>
-<a href="https://github.com/franfram/stinkbug_targets/blob/6127cce6e3e40bbc70d1706f643512147a195640/analysis/render_tables.Rmd" target="_blank">6127cce</a>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/ae8e379b5cbfbb4efb7816ff4215bacec7e49676/docs/render_tables.html" target="_blank">ae8e379</a>
 </td>
 <td>
 franfram
 </td>
 <td>
-2022-09-22
+2022-09-29
 </td>
 <td>
-init repo
+website test
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/b3906bb9223c7294a369350dbf399f349afb475b/analysis/render_tables.Rmd" target="_blank">b3906bb</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+update website
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/b3906bb9223c7294a369350dbf399f349afb475b/docs/render_tables.html" target="_blank">b3906bb</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+update website
 </td>
 </tr>
 </tbody>
@@ -647,7 +711,7 @@ init repo
 </div>
 <p>Setup</p>
 <pre class="r"><code>library(here)</code></pre>
-<pre><code>here() starts at /home/arnle/stinkbug_targets_html</code></pre>
+<pre><code>here() starts at /home/arnle/stinkbugdynamics</code></pre>
 <pre class="r"><code>knitr::opts_knit$set(root.dir = here::here())</code></pre>
 <p>Packages</p>
 <pre class="r"><code>source(&#39;./packages.R&#39;)</code></pre>
@@ -697,7 +761,7 @@ Attaching package: &#39;coda&#39;</code></pre>
 <pre class="r"><code>library(kableExtra)
 
 getwd()</code></pre>
-<pre><code>[1] &quot;/home/arnle/stinkbug_targets_html&quot;</code></pre>
+<pre><code>[1] &quot;/home/arnle/stinkbugdynamics&quot;</code></pre>
 <pre class="r"><code>tar_manifest(names = contains(&quot;table&quot;))</code></pre>
 <pre><code>ℹ Using R 4.2.1 (lockfile was generated with R 4.1.2)
 Loading .Rprofile for the current workflowr project
@@ -713,7 +777,7 @@ Use `renv::restore(packages = &quot;renv&quot;)` to install renv 0.15.2 into the
 ✔ tibble  3.1.8     ✔ dplyr   1.0.9
 ✔ tidyr   1.1.4     ✔ stringr 1.4.0
 ✔ readr   2.1.2     ✔ forcats 0.5.1
-here() starts at /home/arnle/stinkbug_targets_html
+here() starts at /home/arnle/stinkbugdynamics
 Loading required package: rstan
 Loading required package: StanHeaders
 rstan (Version 2.21.2, GitRev: 2e1f913d3ca3)
@@ -779,7 +843,7 @@ Use `renv::restore(packages = &quot;renv&quot;)` to install renv 0.15.2 into the
 ✔ tibble  3.1.8     ✔ dplyr   1.0.9
 ✔ tidyr   1.1.4     ✔ stringr 1.4.0
 ✔ readr   2.1.2     ✔ forcats 0.5.1
-here() starts at /home/arnle/stinkbug_targets_html
+here() starts at /home/arnle/stinkbugdynamics
 Loading required package: rstan
 Loading required package: StanHeaders
 rstan (Version 2.21.2, GitRev: 2e1f913d3ca3)
@@ -827,12 +891,12 @@ Loading required package: viridisLite
    name                          command                                 pattern
    &lt;chr&gt;                         &lt;chr&gt;                                   &lt;chr&gt;  
  1 jags_2017_summary_model_M1_b0 &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 2 jags_2017_summary_model_M1    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 3 jags_2017_summary_model_M2    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 4 jags_2017_summary_model_M3    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 5 jags_2017_summary_model_M2_b0 &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 6 jags_2017_summary_model_M3v2  &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
- 7 jags_2017_summary_model_M3v3  &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 2 jags_2017_summary_model_M3v2  &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 3 jags_2017_summary_model_M3v3  &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 4 jags_2017_summary_model_M2_b0 &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 5 jags_2017_summary_model_M1    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 6 jags_2017_summary_model_M2    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
+ 7 jags_2017_summary_model_M3    &quot;jagstargets::tar_jags_df(jags_2017_mc… &lt;NA&gt;   
  8 table_summary_M1_b0           &quot;render_summary_table(jags_summary = j… &lt;NA&gt;   
  9 table_summary_M2              &quot;render_summary_table(jags_summary = j… &lt;NA&gt;   
 10 table_summary_M3              &quot;render_summary_table(jags_summary = j… &lt;NA&gt;   </code></pre>
@@ -847,13 +911,13 @@ c(&quot;M1_b0&quot;, &quot;M2&quot;, &quot;M3&quot;) %&gt;%
     }
   )</code></pre>
 <pre><code>[[1]]
-[1] &quot;/home/arnle/stinkbug_targets_html/output/tables/M1_b0_model_summary.html&quot;
+[1] &quot;/home/arnle/stinkbugdynamics/output/tables/M1_b0_model_summary.html&quot;
 
 [[2]]
-[1] &quot;/home/arnle/stinkbug_targets_html/output/tables/M2_model_summary.html&quot;
+[1] &quot;/home/arnle/stinkbugdynamics/output/tables/M2_model_summary.html&quot;
 
 [[3]]
-[1] &quot;/home/arnle/stinkbug_targets_html/output/tables/M3_model_summary.html&quot;</code></pre>
+[1] &quot;/home/arnle/stinkbugdynamics/output/tables/M3_model_summary.html&quot;</code></pre>
 <pre class="r"><code>tar_read(table_loo_comparison_2017) </code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -973,64 +1037,6 @@ M3
 </td>
 <td style="text-align:right;">
 37.11
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-M3v2
-</td>
-<td style="text-align:right;">
--27.72
-</td>
-<td style="text-align:right;">
-12.91
-</td>
-<td style="text-align:right;">
--289.52
-</td>
-<td style="text-align:right;">
-18.80
-</td>
-<td style="text-align:right;">
-98.42
-</td>
-<td style="text-align:right;">
-12.49
-</td>
-<td style="text-align:right;">
-579.05
-</td>
-<td style="text-align:right;">
-37.60
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-M3v3
-</td>
-<td style="text-align:right;">
--28.87
-</td>
-<td style="text-align:right;">
-13.62
-</td>
-<td style="text-align:right;">
--290.67
-</td>
-<td style="text-align:right;">
-19.77
-</td>
-<td style="text-align:right;">
-100.22
-</td>
-<td style="text-align:right;">
-13.41
-</td>
-<td style="text-align:right;">
-581.34
-</td>
-<td style="text-align:right;">
-39.55
 </td>
 </tr>
 </tbody>

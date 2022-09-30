@@ -32,6 +32,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -247,7 +249,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">stinkbug_targets</a>
+      <a class="navbar-brand" href="index.html">Stink bug dynamics</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -260,9 +262,39 @@ $(document).ready(function () {
 <li>
   <a href="license.html">License</a>
 </li>
+<li>
+  <a href="data.html">Data</a>
+</li>
+<li>
+  <a href="pipeline.html">Pipeline</a>
+</li>
+<li>
+  <a href="forecast-per-loc.html">Forecasts M3</a>
+</li>
+<li>
+  <a href="forecast_model-comparison.html">Forecasts model comp</a>
+</li>
+<li>
+  <a href="validation.html">Validation</a>
+</li>
+<li>
+  <a href="parameters.html">Parameters</a>
+</li>
+<li>
+  <a href="ua.html">Uncertainty analysis</a>
+</li>
+<li>
+  <a href="bma.html">BMA</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/myname/stinkbugdynamics">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -301,7 +333,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-07
+<strong>Last updated:</strong> 2022-09-30
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -310,7 +342,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
 aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>stinkbug_targets_nn/</code> <span
+<strong>Knit directory:</strong> <code>stinkbugdynamics/</code> <span
 class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
@@ -348,15 +380,15 @@ results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugtargetsnntree4d9c2d795c6122740ba863743f0db54fc8174a2dtargetblank4d9c2d7a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreeb06550b64b6444f26cbec51e9b88f4d4941d1df7targetblankb06550ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/franfram/stinkbug_targets_nn/tree/4d9c2d795c6122740ba863743f0db54fc8174a2d" target="_blank">4d9c2d7</a>
+<a href="https://github.com/franfram/stinkbugdynamics/tree/b06550b64b6444f26cbec51e9b88f4d4941d1df7" target="_blank">b06550b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugtargetsnntree4d9c2d795c6122740ba863743f0db54fc8174a2dtargetblank4d9c2d7a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomfranframstinkbugdynamicstreeb06550b64b6444f26cbec51e9b88f4d4941d1df7targetblankb06550ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -366,7 +398,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/franfram/stinkbug_targets_nn/tree/4d9c2d795c6122740ba863743f0db54fc8174a2d" target="_blank">4d9c2d7</a>.
+<a href="https://github.com/franfram/stinkbugdynamics/tree/b06550b64b6444f26cbec51e9b88f4d4941d1df7" target="_blank">b06550b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -381,32 +413,33 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    R/.Rhistory
-    Ignored:    Rplots.pdf
     Ignored:    _targets/meta/process
     Ignored:    _targets/meta/progress
     Ignored:    _targets/objects/
     Ignored:    _targets/user/
-    Ignored:    data/
-    Ignored:    output/
+    Ignored:    data/ecmwf_data/
+    Ignored:    data/ua/
+    Ignored:    output/plots/
+    Ignored:    output/tables/
     Ignored:    plots/
     Ignored:    renv/library/
     Ignored:    renv/staging/
-    Ignored:    ridgeplot.png
-    Ignored:    tabla_wrangled_data_2021.pdf
-    Ignored:    tabla_wrangled_data_2021.png
-    Ignored:    test.png
-    Ignored:    test_table.png
+
+Untracked files:
+    Untracked:  analysis/ua.Rmd
 
 Unstaged changes:
-    Modified:   R/plot_post_params.R
-    Modified:   R/render_summary_table.R
-    Modified:   _targets.R
-    Modified:   _targets/meta/meta
-    Modified:   analysis/render_tables.Rmd
+    Modified:   analysis/_site.yml
+    Modified:   analysis/bma.Rmd
+    Modified:   analysis/data.Rmd
+    Modified:   analysis/forecast-per-loc.Rmd
+    Modified:   analysis/forecast_model-comparison.Rmd
+    Modified:   analysis/parameters.Rmd
+    Modified:   analysis/pipeline.Rmd
+    Modified:   analysis/validation.Rmd
 
 </code></pre>
 <p>
@@ -453,19 +486,70 @@ Message
 <tbody>
 <tr>
 <td>
-Rmd
+html
 </td>
 <td>
-<a href="https://github.com/franfram/stinkbug_targets_nn/blob/71f5cf785e7729528155012d1e12c7946a81be81/analysis/about.Rmd" target="_blank">71f5cf7</a>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/ae8e379b5cbfbb4efb7816ff4215bacec7e49676/docs/about.html" target="_blank">ae8e379</a>
 </td>
 <td>
 franfram
 </td>
 <td>
-2022-05-18
+2022-09-29
 </td>
 <td>
-add old repo stuff
+website test
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/franfram/stinkbugdynamics/53af0758c743571ec5047ae86cc088e31a6b0343/docs/about.html" target="_blank">53af075</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/3baee423516fd694f01e2c0a2bdeeee27cce8f35/analysis/about.Rmd" target="_blank">3baee42</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+publish website
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/franfram/stinkbugdynamics/blob/49bed99af7e619a3f0e834450c952ff72146af61/analysis/about.Rmd" target="_blank">49bed99</a>
+</td>
+<td>
+franfram
+</td>
+<td>
+2022-09-29
+</td>
+<td>
+Start workflowr project.
 </td>
 </tr>
 </tbody>
