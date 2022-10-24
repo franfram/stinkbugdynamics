@@ -288,9 +288,25 @@ compute_posterior_predictive_check <- function(
         caption =  "Estimated values represented by bold line (median) and ribbons (HPDI 60, 80, and 95).
          Observed values represented by dots and solid line"
       ) +
-      theme(axis.title.y = element_text(angle = 89, vjust = 0.5)) #+
+      theme(
+        axis.title.y = element_text(angle = 89, vjust = 0.5), 
+        axis.title = element_text(size = 20), 
+        axis.text = element_text(size = 20)
+      ) #+
       #theme_few(base_size = 20)
 
+    print(post_check_plots[[j]])
+    ggsave(
+      filename = paste0(
+        "plot_postcheck_density_", 
+        model_name,
+        "_",
+        loc_names[[j]], 
+        ".png"
+      ),
+      path = here::here("output", "plots")
+    )
+  
     #plots_post_names_planta[[j]] <- paste0(loc_names[j], "_planta")
   }
 

@@ -436,7 +436,7 @@ plot_post_params <- function(
     viridis_options_locality <- c("viridis", "magma", "cividis", "mako", "rocket", "turbo")
     viridis_options_global <- c("viridis", "magma", "cividis", "mako", "rocket", "turbo", "plasma")
 
-
+    text_size = 20
     ## Plot
     
     ridgeplot_locality <- 
@@ -458,13 +458,15 @@ plot_post_params <- function(
             title = str_c(.x, " parameter per Locality"), 
             x = "Posterior value"
           ) +
-          theme_bw(base_size = bs) +
+          theme_bw() +
           theme(
             legend.position = "none",
             axis.title.y = element_blank(),
-            axis.text.y = element_text(angle = 45, size = 12),
-            axis.text.x = element_text(size = 10),
-            plot.title = element_text(size = 15)
+            axis.text.y = element_text(angle = 45, size = text_size),
+            # axis.text.x = element_text(size = 20),
+            # plot.title = element_text(size = 15), 
+            axis.title = element_text(size = text_size), 
+            axis.text = element_text(size = text_size)
           )
         }
       )
@@ -495,7 +497,9 @@ plot_post_params <- function(
               legend.position = "none",
               axis.title.y = element_blank(),
               axis.text.y = element_text(angle = 90),
-              plot.title = element_text(size = 15)
+              # plot.title = element_text(size = 15), 
+              axis.title = element_text(size = text_size), 
+              axis.text = element_text(size = text_size)
             )
         }
       )
@@ -535,8 +539,9 @@ plot_post_params <- function(
         y = "Density"
       ) +
       theme(
-        axis.title.x = element_text(size = 15),
-        axis.title.y = element_text(size = 15)
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20), 
+        axis.title = element_text(size = 20)
       )
     
 

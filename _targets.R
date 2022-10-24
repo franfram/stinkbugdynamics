@@ -189,12 +189,12 @@ tar_plan(
 
   # Plot posterior parameters 
   ## M1_b0
-  plots_posterior_params_M1_b0 = plot_post_params(
-    jags_draws = jags_2017_draws_model_M1_b0,
-    useful_objects_2017,
-    merged_sb_noaa_ecmwf_data_2017, 
-    model_name = "M1_b0"
-  ), 
+  # plots_posterior_params_M1_b0 = plot_post_params(
+  #   jags_draws = jags_2017_draws_model_M1_b0,
+  #   useful_objects_2017,
+  #   merged_sb_noaa_ecmwf_data_2017, 
+  #   model_name = "M1_b0"
+  # ), 
   ## M3
   plots_posterior_params_M3 = plot_post_params(
     jags_draws = jags_2017_draws_model_M3,
@@ -569,23 +569,23 @@ tar_plan(
       model_name = "M3"
   ), 
 
-  ## M3v2 model
-  plots_lastweek_forecast_M3v2_2017 = plot_lastweeks_forecast_2017(
-      forecast_data = lastweek_forecast_M3v2_2017,
-      wrangled_stinkbug_data_2017,
-      useful_objects_2017,
-      weeks_forecasted = 1,
-      model_name = "M3v2"
-  ), 
+  # ## M3v2 model
+  # plots_lastweek_forecast_M3v2_2017 = plot_lastweeks_forecast_2017(
+  #     forecast_data = lastweek_forecast_M3v2_2017,
+  #     wrangled_stinkbug_data_2017,
+  #     useful_objects_2017,
+  #     weeks_forecasted = 1,
+  #     model_name = "M3v2"
+  # ), 
 
-  ## M3 model
-  plots_lastweek_forecast_M3v3_2017 = plot_lastweeks_forecast_2017(
-      forecast_data = lastweek_forecast_M3v3_2017,
-      wrangled_stinkbug_data_2017,
-      useful_objects_2017,
-      weeks_forecasted = 1,
-      model_name = "M3v3"
-  ), 
+  # ## M3v3 model
+  # plots_lastweek_forecast_M3v3_2017 = plot_lastweeks_forecast_2017(
+  #     forecast_data = lastweek_forecast_M3v3_2017,
+  #     wrangled_stinkbug_data_2017,
+  #     useful_objects_2017,
+  #     weeks_forecasted = 1,
+  #     model_name = "M3v3"
+  # ), 
   
   ## M1_b0 model
   plots_lastweek_forecast_M1_b0_2017 = plot_lastweeks_forecast_2017(
@@ -612,7 +612,7 @@ tar_plan(
         'M1_b0' = plots_lastweek_forecast_M1_b0_2017, 
         'M2' = plots_lastweek_forecast_M2_2017, 
         'M3' = plots_lastweek_forecast_M3_2017#, 
-        # 'M3v2' = plots_lastweek_forecast_M3v2_2017, 
+        #'M3v2' = plots_lastweek_forecast_M3v2_2017#, 
         # 'M3v3' = plots_lastweek_forecast_M3v3_2017 
 
       ),

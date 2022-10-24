@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 
 options(tidyverse.quiet = TRUE)
+knitr::opts_chunk$set(fig.width=11, fig.height=7) 
 ```
 
 

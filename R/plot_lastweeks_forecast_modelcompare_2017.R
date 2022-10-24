@@ -12,7 +12,21 @@ plot_lastweeks_forecast_modelcompare_2017 <- function(
   data_list, 
   useful_objects_2017
 ) {
- 
+  # interactive development
+  # data_list = list(
+  #       'M1_b0' = tar_read(plots_lastweek_forecast_M1_b0_2017), 
+  #       'M2' = tar_read(plots_lastweek_forecast_M2_2017), 
+  #       'M3' = tar_read(plots_lastweek_forecast_M3_2017), 
+  #       'M3v2' = tar_read(plots_lastweek_forecast_M3v2_2017)#, 
+  #       # 'M3v3' = plots_lastweek_forecast_M3v3_2017 
+
+  # )
+  # useful_objects_2017 <- tar_read(useful_objects_2017)
+  
+  
+  
+  
+  
   Localities <- useful_objects_2017[['for_jags']][['localities']]
   time_series_length <- useful_objects_2017[['for_jags']][['time_series_length']]
   
@@ -363,15 +377,17 @@ plot_lastweeks_forecast_modelcompare_2017 <- function(
     # ) +
     labs(
       x = "Week", 
-      y = "EqNv density"#, 
+      y = "E density", 
       #subtitle = Localities[[j]],
       # caption = "Vertical dashed line indicated beggining of forecast"
+      color = "Model"
     ) +
     theme(
       axis.title.y = element_text(
         angle = 90, 
         vjust = 0.5
-      )
+      ), 
+      legend.position = "top"
     ) + 
     coord_cartesian(
       ylim = c(0, max(data_all_models$density$EqNv_obs) * 1.3)
@@ -441,15 +457,17 @@ plot_lastweeks_forecast_modelcompare_2017 <- function(
     ) +
     labs(
       x = "Week", 
-      y = "EqNv abundance"#, 
+      y = "EqNv abundance", 
       #subtitle = Localities[[j]],
       # caption = "Vertical dashed line indicated beggining of forecast"
+      color = "Model"
     ) +
     theme(
       axis.title.y = element_text(
         angle = 90, 
         vjust = 0.5
-      )
+      ), 
+      legend.position = "top"
     ) + 
     coord_cartesian(
       ylim = c(0, max(data_all_models$abundance$EqNv_obs) * 1.3)

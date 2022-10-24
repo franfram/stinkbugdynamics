@@ -34,11 +34,11 @@ plot_lastweeks_forecast_2017 <- function(
   # 
 
   # Interactive development 
-  forecast_data <- tar_read(lastweek_forecast_M3_2017)
-  wrangled_stinkbug_data_2017 <- tar_read(wrangled_stinkbug_data_2017) 
-  useful_objects_2017 <- tar_read(useful_objects_2017)
-  model_name <- "M3"
-  weeks_forecasted <- 1
+  # forecast_data <- tar_read(lastweek_forecast_M3_2017)
+  # wrangled_stinkbug_data_2017 <- tar_read(wrangled_stinkbug_data_2017) 
+  # useful_objects_2017 <- tar_read(useful_objects_2017)
+  # model_name <- "M3"
+  # weeks_forecasted <- 1
 
   
   Y_A_EqNv_mean_density <- list()
@@ -371,13 +371,14 @@ plot_lastweeks_forecast_2017 <- function(
         axis.title.y = element_text(
           angle = 90, 
           vjust = 0.5
-        )
+        ), 
+        axis.title = element_text(size = 20), 
+        axis.text = element_text(size = 20)
       ) #+
     #theme_few(base_size = 20) 
     
     
     #plots_forecastvsdata_names[[j]] <- paste0(Localities[j], "_planta") 
-    
     
     
     
@@ -479,7 +480,9 @@ plot_lastweeks_forecast_2017 <- function(
         axis.title.y = element_text(
           angle = 90, 
           vjust = 0.5
-        )
+        ), 
+        axis.title = element_text(size = 20), 
+        axis.text = element_text(size = 20)
       ) #+
     #theme_few(base_size = 20) 
     
